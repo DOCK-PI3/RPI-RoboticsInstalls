@@ -26,4 +26,4 @@
  
  Ejecutar el script
  
- sudo ./DOCK-PI3_Roboticsinstall.sh
+ ./DOCK-PI3_Roboticsinstall.sh
