@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 dialog --backtitle "Script Multi-instalador de sistemas y utilidades" \
 --title "DOCK-PI3_Roboticsinstall ,Script Multi-instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
