@@ -79,7 +79,7 @@ function webmin_instalador() {
 dialog --infobox "... Script instalador de WebMin en su version 1.920 ..." 30 55 ; sleep 3
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
+sudo apt-get install -y perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
 wget http://prdownloads.sourceforge.net/webadmin/webmin_1.920_all.deb
 sudo dpkg --install webmin_1.920_all.deb
 dialog --infobox "... La instalación se ejecuto automáticamente en /usr/share/webmin , el nombre de usuario de administración configurado como root y la contraseña a su contraseña de root actual.\n Ahora debería poder iniciar sesión en Webmin en la URL http://localhost:10000/ \n O si accede a él de forma remota, reemplace localhost con la dirección IP de su sistema. ..." 30 55 ; sleep 10
