@@ -1,7 +1,7 @@
 #!/bin/bash
 
-dialog --backtitle "Script Multi-instalador de sistemas y utilidades" \
---title "DOCK-PI3_Roboticsinstall ,Script Multi-instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
+dialog --backtitle "DOCK-PI3_Roboticsinstall ,Multi-instalador de sistemas y utilidades" \
+--title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
 --msgbox "${infobox}" 35 110
 
 
