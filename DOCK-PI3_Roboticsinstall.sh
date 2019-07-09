@@ -21,6 +21,7 @@ function main_menu() {
 			6 "Rpi Instalar Retroarch 1.7.7" \
 			7 "Rpi Instalar EmulationStation" \
 			8 "Rpi Instalar AttracMode" \
+			9 "Rpi Instalar VsFTPd" \
 			2>&1 > /dev/tty)
 
         case "$choice" in
@@ -33,6 +34,7 @@ function main_menu() {
 			6) retroarch_instalador ;;
 			7) emulationstation_instalador ;;
 			8) attractmode_instalador ;;
+			9) vsftpd_instalador ;;
 			*)  break ;;
         esac
     done
@@ -168,6 +170,28 @@ sudo rm -r -f /home/pi/develop
 dialog --infobox " Una vez que inicie attract seleccione su idioma \n ,ya puede usar atrractmode. " 350 350 ; sleep 10
 dialog --infobox " Attract se instalo de forma correcta y con mmal ... ,reiniciando en 15s" 350 350 ; sleep 15
 # sudo shutdown -r now
+}
+
+function vsftpd_instalador() {                                          
+dialog --infobox "... Script instalador de VsFTPd en su version mas reciente ..." 30 55 ; sleep 3
+sudo apt update
+sudo apt install -y vsftpd
+# crear un backup del fichero de configuracion
+sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.backup
+# Agregar primer usuario para el ftp
+dialog --infobox "... Vamos a crear 1 usuario para el ftp,de nombre masosteam\n el pasword escribalo ahora y pulse enter y enter para saltar lo demas..." 30 55 ; sleep 7
+sudo adduser masosteam
+sudo mkdir /home/masosteam/ftp
+sudo chown nobody:nogroup /home/masosteam/ftp
+sudo chmod a-w /home/masosteam/ftp
+sudo mkdir /home/masosteam/ftp/ficheros
+sudo chown masosteam:masosteam /home/masosteam/ftp/ficheros
+echo "MasOS Team - vsftpd fichero de pruebas..." | sudo tee /home/masosteam/ftp/ficheros/prueba.txt
+# aqui hacemos un cat a vsftpd.conf con la configuracion x defecto....
+
+echo "masosteam" | sudo tee -a /etc/vsftpd.userlist
+sudo systemctl restart vsftpd
+# Asegurar conecciones ,certificado.,...
 }
 
 main_menu
