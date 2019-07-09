@@ -188,7 +188,10 @@ sudo mkdir /home/masosteam/ftp/ficheros
 sudo chown masosteam:masosteam /home/masosteam/ftp/ficheros
 echo "MasOS Team - vsftpd fichero de pruebas..." | sudo tee /home/masosteam/ftp/ficheros/prueba.txt
 # aqui hacemos un cat a vsftpd.conf con la configuracion x defecto....
+# sudo cat > /etc/vsftpd.conf <<_EOF_
 
+# _EOF_
+# Añadir usuario a la lista blanca.,...
 echo "masosteam" | sudo tee -a /etc/vsftpd.userlist
 sudo systemctl restart vsftpd
 # Asegurar conecciones ,certificado.,...
