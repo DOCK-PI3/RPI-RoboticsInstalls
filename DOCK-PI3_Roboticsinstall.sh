@@ -179,7 +179,7 @@ sudo apt install -y vsftpd
 # crear un backup del fichero de configuracion
 sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.backup
 # Agregar primer usuario para el ftp
-dialog --infobox "... Vamos a crear 1 usuario para el ftp,de nombre masosteam\n el pasword escribalo ahora y pulse enter y enter para saltar lo demas..." 30 55 ; sleep 7
+dialog --infobox "... Vamos a crear 1 usuario para el ftp,de nombre masosteam\n el pasword escribalo ahora y pulse enter y enter para saltar lo demas..." 40 55 ; sleep 7
 sudo adduser masosteam
 sudo mkdir /home/masosteam/ftp
 sudo chown nobody:nogroup /home/masosteam/ftp
@@ -188,10 +188,11 @@ sudo mkdir /home/masosteam/ftp/ficheros
 sudo chown masosteam:masosteam /home/masosteam/ftp/ficheros
 echo "MasOS Team - vsftpd fichero de pruebas..." | sudo tee /home/masosteam/ftp/ficheros/prueba.txt
 # Asegurar conecciones ,certificado.,...
-dialog --infobox "... Es hora de crear un certificado y encriptar las conexiones en su FTP.\n\nConteste las preguntas y pulse enter para crear su certificado..." 30 55 ; sleep 10
+dialog --infobox "... Es hora de crear un certificado y encriptar las conexiones en su FTP.\n\nConteste las preguntas y pulse enter para crear su certificado..." 40 55 ; sleep 10
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
 # aqui hacemos un cat a vsftpd.conf con la configuracion x defecto....
-dialog --infobox "... Para permitir acceso externo tiene que abrir en su router desde el puerto 50000 a 60000.\n\nEl servidor esta configurado para  trabajar en modo pasivo..." 30 55 ; sleep 10
+dialog --infobox "... Para permitir acceso externo tiene que abrir en su router desde el puerto 50000 a 60000.\n\nEl servidor esta configurado para  trabajar en modo pasivo..." 40 55 ; sleep 10
+sudo rm /etc/vsftpd.conf
 sudo cat > /etc/vsftpd.conf <<_EOF_
 # Example config file /etc/vsftpd.conf
 ######## EDITADO POR DOCK-PI3 - THE MASOS TEAM ########
@@ -309,8 +310,8 @@ ftpd_banner=Welcome to My FTP service.
 chroot_local_user=YES
 user_sub_token=$USER
 local_root=/home/$USER/ftp
-pasv_min_port=50000
-pasv_max_port=60000
+pasv_min_port=40000
+pasv_max_port=50000
 userlist_enable=YES
 userlist_file=/etc/vsftpd.userlist
 userlist_deny=NO
