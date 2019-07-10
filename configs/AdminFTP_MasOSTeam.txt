@@ -1,0 +1,47 @@
+VSFTPD INFORMACION PARA ADMINISTRAR SU SERVIDOR:
+
+# Puertos que tiene que abrir si quiere acceder desde fuera de su red local
+ 20/tcp
+ 21/tcp
+ 990/tcp
+ 40000:50000/tcp
+ 
+############################################################################### 
+# Crear un nuevo usuario para su servidor ftp, edite el nombre usuarioFTP por el nombre que quiera.
+
+Primero agregamos un usuario, en la terminal ejecutamos : 
+sudo adduser usuarioFTP
+
+Nota:Asigne una contraseña cuando se le solicite y luego puede presionar ENTER a través de las otras indicaciones para saltar.
+
+Crear la carpeta ftp para el usuario:
+sudo mkdir /home/usuarioFTP/ftp
+
+Establecer su propiedad de usuario:grupo :
+sudo chown nobody:nogroup /home/usuarioFTP/ftp
+
+Eliminar permisos de escritura:
+sudo chmod a-w /home/usuarioFTP/ftp
+
+Crear directorio ficheros para guardar ficheros y establecer su propiedad de usuario:grupo :
+sudo mkdir /home/usuarioFTP/ftp/ficheros
+sudo chown usuarioFTP:usuarioFTP /home/usuarioFTP/ftp/ficheros
+
+Añadir usuario a la lista blanca, sin esto no se puede conectar.
+echo "usuarioFTP" | sudo tee -a /etc/vsftpd.userlist
+
+Reiniciar demonio para cargar la nueva configuración:
+sudo systemctl restart vsftpd.service
+
+Nota: Si el comando anterior no funciona pruebe este; sudo systemctl restart vsftpd
+##################################################################################
+
+FICHEROS DE CONFIGURACION IMPORTANTES:
+/etc/vsftpd.userlist # Lista con los usuarios a los que se le permite conectar a su ftp
+/etc/vsftpd.conf     # Toda la configuracion base que hace funcionar su servidor ftp,opciones globales.
+
+______________________________________________________________________________________________________
+
+# Como crear los certificados SSL para usar con vsftpd, -days son los dias que el certificado sera valido,lo puede editar.
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
+______________________________________________________________________________________________________

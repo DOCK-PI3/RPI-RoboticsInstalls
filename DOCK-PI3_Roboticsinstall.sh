@@ -92,7 +92,7 @@ dialog --infobox "... Script instalador de Retroarch en su version 1.7.7 ..." 30
 sudo apt update
 dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
 # sudo apt upgrade -y
-dialog --infobox "... Elija idioma para su teclado ..." 30 55 ; sleep 5
+dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
 sudo dpkg-reconfigure keyboard-configuration
 dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
 sudo dpkg-reconfigure locales
@@ -168,7 +168,7 @@ make -j4 USE_GLES=1
 sudo make -j4 install USE_GLES=1
 sudo rm -r -f /home/pi/develop
 dialog --infobox " Una vez que inicie attract seleccione su idioma \n ,ya puede usar atrractmode. " 350 350 ; sleep 10
-dialog --infobox " Attract se instalo de forma correcta y con mmal ... ,reiniciando en 15s" 350 350 ; sleep 15
+dialog --infobox " Attract se instalo de forma correcta y con mmal ... ,reiniciando en 10s" 350 350 ; sleep 10
 # sudo shutdown -r now
 }
 
@@ -197,8 +197,10 @@ echo "masosteam" | sudo tee -a /etc/vsftpd.userlist
 # crear un backup del fichero de configuracion importado...
 sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.backup
 # Reiniciar servicio,se recomienda reiniciar el sistema.,...
-sudo systemctl restart vsftpd
+sudo systemctl restart vsftpd.service
 # Crear fichero con informacion para administar el servidor y ejemplos en el home/pi/AdminFTP_MasOSTeam.txt.,...
+dialog --infobox "... VsFTPd instalado y funcionando ,le dejo un fichero con informacion \npara que pueda y sepa administrar su servidor.\n\n Busque en /home/pi/AdminFTP_MasOSTeam.txt ..." 30 55 ; sleep 7
+cd && sudo cp RPI-RoboticsInstalls/configs/AdminFTP_MasOSTeam.txt /home/pi/
 }
 
 main_menu
