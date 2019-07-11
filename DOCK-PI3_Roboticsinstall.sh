@@ -1,8 +1,8 @@
 #!/bin/bash
-version=" 1.3.8"
+version=" 1.5.9"
 infobox="${infobox}\n_______________________________________________________\n\n"
 infobox="${infobox}\n DOCK-PI3_Roboticsinstall creado para ayudar,\nInstalador de multiples herramientas y utilidades....."
-infobox="${infobox}\nAttractMode ,RetroArch 1.7.7 ,EmulationStation ,WebMin \n,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
+infobox="${infobox}\nAttractMode ,RetroArch 1.7.7 ,EmulationStation ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
 infobox="${infobox}\n_______________________________________________________\n\n"
 dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
 --title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
@@ -27,6 +27,8 @@ function main_menu() {
 			8 "Rpi Instalar AttracMode" \
 			9 "Rpi Instalar VsFTPd" \
 			10 "Rpi Instalar The Fan Club - Duck DNS Setup" \
+			11 "Rpi Instalar Mumble Server VOIP" \
+			12 "Rpi Instalar SAMBA Server" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
@@ -43,6 +45,8 @@ function main_menu() {
 			8) attractmode_instalador ;;
 			9) vsftpd_instalador ;;
 			10) duckDNSSetup_instalador ;;
+			11) mumbleserver_instalador ;;
+			12) samba_instalador ;;
 			*)  break ;;
         esac
     done
@@ -301,6 +305,38 @@ fi
 # Setup report
 zenity --info --title="The Fan Club - Duck DNS Setup" --text="<b>- Duck DNS script file created\n- Duck DNS cron job added\n- Duck DNS server response : $duckResponse</b>\n\n$responseExtra" --ok-label="Done" 
 cd && cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
+exit
+}
+
+function mumbleserver_instalador() {                                          
+dialog --infobox "... Instalar servidor VOIP Mumble server - MURMUR..." 30 55 ; sleep 3
+sudo apt-get update
+sudo apt-get install mumble-server
+dialog --infobox "... Ahora configuramos el servidor VOIP Mumble server ,rellene los campos!..." 30 55 ; sleep 5
+sudo dpkg-reconfigure mumble-server
+dialog --infobox "... Instalado el servidor VOIP Mumble server - MURMUR...\n\nPara editar la configuracion: sudo nano /etc/mumble-server.ini\n\nComo reiniciar su servidor: sudo /etc/init.d/mumble-server restart" 30 55 ; sleep 8
+cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
+exit
+}
+
+function samba_instalador() {                                          
+dialog --infobox "... Instalar SAMBA server - SMB..." 30 55 ; sleep 3
+sudo apt-get update
+sudo apt-get install samba samba-common-bin
+mkdir /home/pi/sharesd
+sudo cat >> /etc/samba/smb.conf <<_EOF_
+[rpisamba]
+path = /home/pi/sharesd
+writeable=Yes
+create mask=0777
+directory mask=0777
+public=no
+_EOF_
+dialog --infobox "... Ahora crearemos un usuario para acceder a samba saresd\n\nEl nombre por defecto es pi\n\nIntrodusca usted la contraseña..." 30 55 ; sleep 7
+sudo smbpasswd -a pi
+sudo systemctl restart smbd
+dialog --infobox "... Instalado SAMBA Server - SMB ...\n\nLa ruta del recurso compartido es: \\raspberrypi\rpisamba \n\nRecuerde ingresar con usuario pi y su contraseña para samba" 30 55 ; sleep 10
+cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
 exit
 }
 
