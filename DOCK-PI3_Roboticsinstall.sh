@@ -1,5 +1,5 @@
 #!/bin/bash
-version=" 1.3.5"
+version=" 1.3.8"
 infobox="${infobox}\n_______________________________________________________\n\n"
 infobox="${infobox}\n DOCK-PI3_Roboticsinstall creado para ayudar,\nInstalador de multiples herramientas y utilidades....."
 infobox="${infobox}\nAttractMode ,RetroArch 1.7.7 ,EmulationStation ,WebMin \n,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
