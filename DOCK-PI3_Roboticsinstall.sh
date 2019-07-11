@@ -26,7 +26,7 @@ function main_menu() {
 			7 "Rpi Instalar EmulationStation" \
 			8 "Rpi Instalar AttracMode" \
 			9 "Rpi Instalar VsFTPd" \
-			10 "Rpi Instalar The Fan Club - Duck DNS Setup" \
+			10 "Rpi Desktop Instalar The Fan Club - Duck DNS Setup" \
 			11 "Rpi Instalar Mumble Server VOIP" \
 			12 "Rpi Instalar SAMBA Server" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
@@ -120,7 +120,6 @@ sudo dpkg-reconfigure locales
 dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
 sudo dpkg-reconfigure tzdata
 dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
-rpSwap on 128
 sudo apt install -y build-essential libasound2-dev libudev-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.7.7.tar.gz' && tar -zxvf v1.7.7.tar.gz
 cd RetroArch-1.7.7
@@ -128,7 +127,6 @@ cd RetroArch-1.7.7
 CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-networking --disable-sdl --disable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
 make -j2
 sudo make -j2 install
-rpSwap off
 # cd && sudo rm -R RetroArch-1.7.7/
 dialog --infobox "... RetroArch instalado correctamente ,Reiniciando el sistema en 7seg espere! ..." 30 55 ; sleep 7
 }
@@ -138,14 +136,12 @@ dialog --infobox "... Script instalador de Emulationstation en su version mas re
 sudo apt-get update
 # sudo apt-get upgrade
 # sudo rpi-update
-rpSwap on 32
 sudo apt-get install -y libboost-system-dev libboost-filesystem-dev libboost-date-time-dev libboost-locale-dev libfreeimage-dev libfreetype6-dev libeigen3-dev libcurl4-openssl-dev libasound2-dev cmake libsdl2-dev
 cd && git clone https://github.com/DOCK-PI3/EmulationStation
 cd EmulationStation
 mkdir build && cd build
 cmake .. && make -j2
-sudo make -j2 install
-rpSwap off
+sudo make install
 # cd && sudo rm -R EmulationStation/
 }
 
@@ -317,36 +313,6 @@ sudo dpkg-reconfigure mumble-server
 dialog --infobox "... Instalado el servidor VOIP Mumble server - MURMUR...\n\nPara editar la configuracion: sudo nano /etc/mumble-server.ini\n\nComo reiniciar su servidor: sudo /etc/init.d/mumble-server restart" 30 55 ; sleep 8
 cd && cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
 exit
-}
-
-## @fn rpSwap()
-## @param command *on* to add swap if needed and *off* to remove later
-## @param memory total memory needed (swap added = memory needed - available memory)
-## @brief Adds additional swap to the system if needed.
-function rpSwap() {
-    local command=$1
-    local swapfile="$__swapdir/swap"
-    case $command in
-        on)
-            rpSwap off
-            local memory=$(free -t -m | awk '/^Total:/{print $2}')
-            local needed=$2
-            local size=$((needed - memory))
-            mkdir -p "$__swapdir/"
-            if [[ $size -ge 0 ]]; then
-                echo "Adding $size MB of additional swap"
-                fallocate -l ${size}M "$swapfile"
-                chmod 600 "$swapfile"
-                mkswap "$swapfile"
-                swapon "$swapfile"
-            fi
-            ;;
-        off)
-            echo "Removing additional swap"
-            swapoff "$swapfile" 2>/dev/null
-            rm -f "$swapfile"
-            ;;
-    esac
 }
 
 function samba_instalador() {                                          
