@@ -323,19 +323,14 @@ function samba_instalador() {
 dialog --infobox "... Instalar SAMBA server - SMB..." 30 55 ; sleep 3
 sudo apt-get update
 sudo apt-get install -y samba samba-common-bin
+dialog --infobox "... El directorio /home/pi/ se comparte por defecto en modo lectura\nAhora crearemos el directorio sharesd en /home/pi ,aqui tiene permisos de escritura..." 30 55 ; sleep 5
 mkdir /home/pi/sharesd
-sudo cat >> /etc/samba/smb.conf <<_EOF_
-[rpisamba]
-path = /home/pi/sharesd
-writeable=Yes
-create mask=0777
-directory mask=0777
-public=no
-_EOF_
-dialog --infobox "... Ahora crearemos un usuario para acceder a samba saresd\n\nEl nombre por defecto es pi\n\nIntrodusca usted la contraseña..." 30 55 ; sleep 7
+sudo rm /etc/samba/smb.conf
+cd && sudo cp RPI-RoboticsInstalls/configs/smb.conf /etc/samba/
+dialog --infobox "... Ahora crearemos un usuario para acceder a samba sharesd\n\nEl nombre por defecto es pi\n\nIntrodusca usted la contraseña..." 30 55 ; sleep 7
 sudo smbpasswd -a pi
 sudo systemctl restart smbd
-dialog --infobox "... Instalado SAMBA Server - SMB ...\n\nLa ruta del recurso compartido es: \\raspberrypi\rpisamba \n\nRecuerde ingresar con usuario pi y su contraseña para samba" 30 55 ; sleep 10
+dialog --infobox "... Instalado SAMBA Server - SMB ...\n\nLa ruta del recurso compartido es: \\RASPBERRYPI\rpisamba \n\nRecuerde ingresar con usuario pi y su contraseña para samba\n\n\n\nSe reinicio samba para cargar la nueva configuracion, recomiendo q reinicie el sistema" 30 55 ; sleep 15
 cd && cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
 exit
 }
