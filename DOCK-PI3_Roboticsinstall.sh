@@ -319,6 +319,36 @@ cd && cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
 exit
 }
 
+## @fn rpSwap()
+## @param command *on* to add swap if needed and *off* to remove later
+## @param memory total memory needed (swap added = memory needed - available memory)
+## @brief Adds additional swap to the system if needed.
+function rpSwap() {
+    local command=$1
+    local swapfile="$__swapdir/swap"
+    case $command in
+        on)
+            rpSwap off
+            local memory=$(free -t -m | awk '/^Total:/{print $2}')
+            local needed=$2
+            local size=$((needed - memory))
+            mkdir -p "$__swapdir/"
+            if [[ $size -ge 0 ]]; then
+                echo "Adding $size MB of additional swap"
+                fallocate -l ${size}M "$swapfile"
+                chmod 600 "$swapfile"
+                mkswap "$swapfile"
+                swapon "$swapfile"
+            fi
+            ;;
+        off)
+            echo "Removing additional swap"
+            swapoff "$swapfile" 2>/dev/null
+            rm -f "$swapfile"
+            ;;
+    esac
+}
+
 function samba_instalador() {                                          
 dialog --infobox "... Instalar SAMBA server - SMB..." 30 55 ; sleep 3
 sudo apt-get update
