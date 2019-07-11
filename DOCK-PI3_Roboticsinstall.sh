@@ -1,6 +1,10 @@
 #!/bin/bash
-
-dialog --backtitle "DOCK-PI3_Roboticsinstall ,Multi-instalador de sistemas y utilidades" \
+version=" 1.3.5"
+infobox="${infobox}\n_______________________________________________________\n\n"
+infobox="${infobox}\n.."
+infobox="${infobox}\n..."
+infobox="${infobox}\n_______________________________________________________\n\n"
+dialog --backtitle "Version de la aplicacion: $version\n\nDOCK-PI3_Roboticsinstall ,Multi-instalador de sistemas y utilidades" \
 --title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
 --msgbox "${infobox}" 35 110
 
@@ -22,10 +26,12 @@ function main_menu() {
 			7 "Rpi Instalar EmulationStation" \
 			8 "Rpi Instalar AttracMode" \
 			9 "Rpi Instalar VsFTPd" \
+			69 "-------------- Para RPI ----------------" \
 			2>&1 > /dev/tty)
 
         case "$choice" in
 			100) separador_menu  ;;
+			69) robotics_update ;;
             1) masos_instalador  ;;
             2) emulos_instalador  ;;
 			3) pivpn_instalador  ;;
@@ -43,6 +49,15 @@ function main_menu() {
 
 function separador_menu() {                                          
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
+}
+
+function robotics_update() {                                          
+dialog --infobox "... Actualiza la herramienta Roboticsinstall..." 30 55 ; sleep 3
+cd && sudo rm -R RPI-RoboticsInstalls/
+git clone https://github.com/DOCK-PI3/RPI-RoboticsInstalls.git
+sudo chmod +x RPI-RoboticsInstalls/DOCK-PI3_Roboticsinstall.sh
+cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
+exit
 }
 
 function masos_instalador() {                                          
