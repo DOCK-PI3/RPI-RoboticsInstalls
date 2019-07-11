@@ -315,7 +315,7 @@ sudo apt-get install -y mumble-server
 dialog --infobox "... Ahora configuramos el servidor VOIP Mumble server ,rellene los campos!..." 30 55 ; sleep 5
 sudo dpkg-reconfigure mumble-server
 dialog --infobox "... Instalado el servidor VOIP Mumble server - MURMUR...\n\nPara editar la configuracion: sudo nano /etc/mumble-server.ini\n\nComo reiniciar su servidor: sudo /etc/init.d/mumble-server restart" 30 55 ; sleep 8
-cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
+cd && cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
 exit
 }
 
@@ -336,7 +336,7 @@ dialog --infobox "... Ahora crearemos un usuario para acceder a samba saresd\n\n
 sudo smbpasswd -a pi
 sudo systemctl restart smbd
 dialog --infobox "... Instalado SAMBA Server - SMB ...\n\nLa ruta del recurso compartido es: \\raspberrypi\rpisamba \n\nRecuerde ingresar con usuario pi y su contraseña para samba" 30 55 ; sleep 10
-cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
+cd && cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
 exit
 }
 
