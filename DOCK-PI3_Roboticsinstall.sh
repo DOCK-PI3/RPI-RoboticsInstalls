@@ -311,7 +311,7 @@ exit
 function mumbleserver_instalador() {                                          
 dialog --infobox "... Instalar servidor VOIP Mumble server - MURMUR..." 30 55 ; sleep 3
 sudo apt-get update
-sudo apt-get install mumble-server
+sudo apt-get install -y mumble-server
 dialog --infobox "... Ahora configuramos el servidor VOIP Mumble server ,rellene los campos!..." 30 55 ; sleep 5
 sudo dpkg-reconfigure mumble-server
 dialog --infobox "... Instalado el servidor VOIP Mumble server - MURMUR...\n\nPara editar la configuracion: sudo nano /etc/mumble-server.ini\n\nComo reiniciar su servidor: sudo /etc/init.d/mumble-server restart" 30 55 ; sleep 8
@@ -322,7 +322,7 @@ exit
 function samba_instalador() {                                          
 dialog --infobox "... Instalar SAMBA server - SMB..." 30 55 ; sleep 3
 sudo apt-get update
-sudo apt-get install samba samba-common-bin
+sudo apt-get install -y samba samba-common-bin
 mkdir /home/pi/sharesd
 sudo cat >> /etc/samba/smb.conf <<_EOF_
 [rpisamba]
