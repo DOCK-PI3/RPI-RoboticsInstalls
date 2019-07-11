@@ -1,10 +1,10 @@
 #!/bin/bash
 version=" 1.3.5"
 infobox="${infobox}\n_______________________________________________________\n\n"
-infobox="${infobox}\n.."
-infobox="${infobox}\n..."
+infobox="${infobox}\n DOCK-PI3_Roboticsinstall creado para ayudar,\nInstalador de multiples herramientas y utilidades....."
+infobox="${infobox}\nAttractMode ,RetroArch 1.7.7 ,EmulationStation ,WebMin \n,vsFTPd ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
 infobox="${infobox}\n_______________________________________________________\n\n"
-dialog --backtitle "Version de la aplicacion: $version\n\nDOCK-PI3_Roboticsinstall ,Multi-instalador de sistemas y utilidades" \
+dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de sistemas y utilidades" \
 --title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
 --msgbox "${infobox}" 35 110
 
@@ -26,7 +26,7 @@ function main_menu() {
 			7 "Rpi Instalar EmulationStation" \
 			8 "Rpi Instalar AttracMode" \
 			9 "Rpi Instalar VsFTPd" \
-			69 "-------------- Para RPI ----------------" \
+			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
         case "$choice" in
