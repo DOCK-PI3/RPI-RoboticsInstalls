@@ -2,9 +2,9 @@
 version=" 1.3.5"
 infobox="${infobox}\n_______________________________________________________\n\n"
 infobox="${infobox}\n DOCK-PI3_Roboticsinstall creado para ayudar,\nInstalador de multiples herramientas y utilidades....."
-infobox="${infobox}\nAttractMode ,RetroArch 1.7.7 ,EmulationStation ,WebMin \n,vsFTPd ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
+infobox="${infobox}\nAttractMode ,RetroArch 1.7.7 ,EmulationStation ,WebMin \n,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
 infobox="${infobox}\n_______________________________________________________\n\n"
-dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de sistemas y utilidades" \
+dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
 --title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
 --msgbox "${infobox}" 35 110
 
@@ -26,6 +26,7 @@ function main_menu() {
 			7 "Rpi Instalar EmulationStation" \
 			8 "Rpi Instalar AttracMode" \
 			9 "Rpi Instalar VsFTPd" \
+			10 "Rpi Instalar The Fan Club - Duck DNS Setup" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
@@ -41,6 +42,7 @@ function main_menu() {
 			7) emulationstation_instalador ;;
 			8) attractmode_instalador ;;
 			9) vsftpd_instalador ;;
+			10) duckDNSSetup_instalador ;;
 			*)  break ;;
         esac
     done
@@ -216,6 +218,89 @@ sudo systemctl restart vsftpd.service
 # Crear fichero con informacion para administar el servidor y ejemplos en el home/pi/AdminFTP_MasOSTeam.txt.,...
 dialog --infobox "... VsFTPd instalado y funcionando ,le dejo un fichero con informacion \npara que pueda y sepa administrar su servidor.\n\n Busque en /home/pi/AdminFTP_MasOSTeam.txt ..." 30 55 ; sleep 7
 cd && sudo cp RPI-RoboticsInstalls/configs/AdminFTP_MasOSTeam.txt /home/pi/
+}
+
+function duckDNSSetup_instalador() {                                          
+dialog --infobox "... Script instalador de Duck DNS Setup ..." 30 55 ; sleep 3
+userHome=$(eval echo ~${USER})
+duckPath="$userHome/duckdns"
+duckLog="$duckPath/duck.log"
+duckScript="$duckPath/duck.sh"
+echo "* Duck DNS setup by The Fan Club - version 1.0"
+echo 
+
+# Remove Option
+case "$1" in
+	remove)
+      zenity --question --title "The Fan Club - Duck DNS Setup" --text "Completely remove Duck DNS settings?"  
+      if [ "$?" -eq "1" ]
+        then
+          echo "Setup cancelled. Program will now quit."
+         exit 0 
+      fi
+      # Remove Duck DNS files
+      rm -R $duckPath
+      # Remove Cron Job
+      crontab -l >/tmp/crontab.tmp
+      sed -e 's/\(^.*duck.sh$\)//g' /tmp/crontab.tmp  | crontab
+      rm /tmp/crontab.tmp  
+      zenity --info --title="The Fan Club - Duck DNS Setup" --text="<b>Duck DNS un-install complete</b>\n\n- Duck DNS script removed\n- Duck DNS folder removed\n- Duck DNS cron job removed" --ok-label="Done" 
+      exit 0        
+	;;
+	
+esac
+
+# Main Install ***
+# Get sub domain 
+domainName=$( zenity --entry --title "The Fan Club - Duck DNS Setup" --text "Enter your Duck DNS sub-domain name" --ok-label="Next" --width="500")
+mySubDomain="${domainName%%.*}"
+duckDomain="${domainName#*.}"
+if [ "$duckDomain" != "duckdns.org" ] && [ "$duckDomain" != "$mySubDomain" ] || [ "$mySubDomain" = "" ]
+then 
+  zenity --error --text="Invalid domain name. The program will now quit." --title "The Fan Club - Duck DNS Setup"
+  exit 0
+fi
+# Get Token value
+duckToken=$( zenity --entry --title "The Fan Club - Duck DNS Setup" --text "Enter your Duck DNS Token value" --ok-label="Next" --width="500")
+# Display Confirmation
+zenity --question --title="The Fan Club - Duck DNS Setup" --text="<b>Your domain name is $mySubDomain.duckdns.org \nand token value $duckToken</b>\n\nPlease click Next to continue or Cancel to quit.\nIt will take a few seconds for the setup to complete." --ok-label="Next" --cancel-label="Cancel"
+# Check if Cancel was pressed
+if [ "$?" -eq "1" ]
+  then
+    zenity --warning --text="Setup canceled" --title "The Fan Club - Duck DNS Setup" --width="300" --ok-label="Done"
+    exit 0
+fi
+# Create duck dir
+if [ ! -d "$duckPath" ] 
+then
+  mkdir "$duckPath"
+fi
+# Create duck script file
+echo "echo url=\"https://www.duckdns.org/update?domains=$mySubDomain&token=$duckToken&ip=\" | curl -k -o $duckLog -K -" > $duckScript
+chmod 700 $duckScript
+# Create Conjob
+# Check if job already exists
+checkCron=$( crontab -l | grep -c $duckScript )
+if [ "$checkCron" -eq 0 ] 
+then
+  # Add cronjob
+  echo "Adding Cron job for Duck DNS"
+  crontab -l | { cat; echo "*/5 * * * * $duckScript"; } | crontab -
+fi
+# Test Setup
+# Run now
+$duckScript
+# Response
+duckResponse=$( cat $duckLog )
+if [ "$duckResponse" != "OK" ]
+then
+  responseExtra="[Error] Duck DNS did not update correctly.\n\nPlease check your settings or run the setup again."
+else
+  responseExtra="Duck DNS setup complete."
+fi
+# Setup report
+zenity --info --title="The Fan Club - Duck DNS Setup" --text="<b>- Duck DNS script file created\n- Duck DNS cron job added\n- Duck DNS server response : $duckResponse</b>\n\n$responseExtra" --ok-label="Done" 
+exit
 }
 
 main_menu
