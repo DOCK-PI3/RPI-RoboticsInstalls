@@ -23,7 +23,6 @@ function main_menu() {
             4 "Rpi Instalar PiHOLE" \
 			5 "Rpi Instalar WebMin" \
 			6 "Rpi Instalar Retroarch 1.7.7" \
-			7 "Rpi Instalar EmulationStation" \
 			8 "Rpi Instalar AttracMode" \
 			9 "Rpi Instalar VsFTPd" \
 			10 "Rpi Desktop Instalar The Fan Club - Duck DNS Setup" \
@@ -41,7 +40,6 @@ function main_menu() {
             4) pihole_instalador ;;
 			5) webmin_instalador ;;
 			6) retroarch_instalador ;;
-			7) emulationstation_instalador ;;
 			8) attractmode_instalador ;;
 			9) vsftpd_instalador ;;
 			10) duckDNSSetup_instalador ;;
@@ -124,25 +122,11 @@ sudo apt install -y build-essential libasound2-dev libudev-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.7.7.tar.gz' && tar -zxvf v1.7.7.tar.gz
 cd RetroArch-1.7.7
 # CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
-CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-networking --disable-sdl --disable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
+CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-sdl --disable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-networking --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
 make -j2
 sudo make -j2 install
 # cd && sudo rm -R RetroArch-1.7.7/
 dialog --infobox "... RetroArch instalado correctamente ,Reiniciando el sistema en 7seg espere! ..." 30 55 ; sleep 7
-}
-
-function emulationstation_instalador() {                                          
-dialog --infobox "... Script instalador de Emulationstation en su version mas reciente ..." 30 55 ; sleep 3
-sudo apt-get update
-# sudo apt-get upgrade
-# sudo rpi-update
-sudo apt-get install -y libboost-system-dev libboost-filesystem-dev libboost-date-time-dev libboost-locale-dev libfreeimage-dev libfreetype6-dev libeigen3-dev libcurl4-openssl-dev libasound2-dev cmake libsdl2-dev
-cd && git clone https://github.com/DOCK-PI3/EmulationStation
-cd EmulationStation
-mkdir build && cd build
-cmake .. && make -j2
-sudo make install
-# cd && sudo rm -R EmulationStation/
 }
 
 function attractmode_instalador() {                                          
