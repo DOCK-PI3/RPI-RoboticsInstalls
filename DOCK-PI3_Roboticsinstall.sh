@@ -2,8 +2,8 @@
 version=" 1.5.9"
 infobox="${infobox}\n_______________________________________________________\n\n"
 infobox="${infobox}\n DOCK-PI3_Roboticsinstall creado para ayudar,\nInstalador de multiples herramientas y utilidades....."
-infobox="${infobox}\nAttractMode ,RetroArch 1.7.7 ,EmulationStation ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
-infobox="${infobox}\n_______________________________________________________\n\n"
+infobox="${infobox}\nAttractMode ,RetroArch 1.7.7 ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
+infobox="${infobox}\n\n\n_______________________________________________________\n\n"
 dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
 --title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
 --msgbox "${infobox}" 35 110

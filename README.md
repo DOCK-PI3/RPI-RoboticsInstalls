@@ -1,14 +1,14 @@
 # RPI-RoboticsInstalls
  Instalador de multiples herramientas y utilidades...
 
- AttractMode ,RetroArch ,EmulationStation ,WebMin ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN
+ AttractMode ,RetroArch ,WebMin ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN
  
  ,EmulOS ,MasOS ,Mumble server y Samba,....
  
  # Como usar RPI-RoboticsInstalls
  Instalar dependencias
  
- sudo apt-get install -y git dialog
+ sudo apt-get install -y git dialog build-essential
  
  
  Clonar repo en github
