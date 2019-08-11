@@ -28,6 +28,9 @@ function main_menu() {
 			10 "Rpi Desktop Instalar The Fan Club - Duck DNS Setup" \
 			11 "Rpi Instalar Mumble Server VOIP" \
 			12 "Rpi Instalar SAMBA Server" \
+			13 "Rpi Instalar GUI DESKTOP LXDE" \
+			14 "Rpi Instalar GUI DESKTOP XFCE4" \
+			15 "Rpi Instalar GUI DESKTOP MATE" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
@@ -45,6 +48,9 @@ function main_menu() {
 			10) duckDNSSetup_instalador ;;
 			11) mumbleserver_instalador ;;
 			12) samba_instalador ;;
+			13) lxde_instalador ;;
+			14) xfce4_instalador ;;
+			15) mate_instalador ;;
 			*)  break ;;
         esac
     done
@@ -313,6 +319,21 @@ sudo systemctl restart smbd
 dialog --infobox "... Instalado SAMBA Server - SMB ...\n\nLa ruta del recurso compartido es: \\RASPBERRYPI\rpisamba \n\nRecuerde ingresar con usuario pi y su contraseña para samba\n\n\n\nSe reinicio samba para cargar la nueva configuracion, recomiendo q reinicie el sistema" 30 55 ; sleep 15
 cd && cd RPI-RoboticsInstalls/ && ./DOCK-PI3_Roboticsinstall.sh
 exit
+}
+
+function lxde_instalador() {                                          
+dialog --infobox "... Preparando instalacion de LXDE ..." 30 55 ; sleep 3
+sudo apt-get install -y lxde-core lxappearance
+}
+
+function xfce4_instalador() {                                          
+dialog --infobox "... Preparando instalacion de XFCE4 ..." 30 55 ; sleep 3
+sudo apt-get install -y xfce4 xfce4-terminal
+}
+
+function mate_instalador() {                                          
+dialog --infobox "... Preparando instalacion de MATE ..." 30 55 ; sleep 3
+sudo apt-get install -y mate-desktop-environment-core
 }
 
 main_menu
