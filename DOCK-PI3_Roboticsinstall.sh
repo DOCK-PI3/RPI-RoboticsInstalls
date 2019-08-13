@@ -323,17 +323,26 @@ exit
 
 function lxde_instalador() {                                          
 dialog --infobox "... Preparando instalacion de LXDE ..." 30 55 ; sleep 3
+sudo apt-get install -y --no-install-recommends xserver-xorg xinit
 sudo apt-get install -y lxde-core lxappearance
+sudo apt-get install -y lightdm
+sudo reboot
 }
 
 function xfce4_instalador() {                                          
 dialog --infobox "... Preparando instalacion de XFCE4 ..." 30 55 ; sleep 3
+sudo apt-get install -y --no-install-recommends xserver-xorg xinit
 sudo apt-get install -y xfce4 xfce4-terminal
+sudo apt-get install -y lightdm
+sudo reboot
 }
 
 function mate_instalador() {                                          
 dialog --infobox "... Preparando instalacion de MATE ..." 30 55 ; sleep 3
+sudo apt-get install -y --no-install-recommends xserver-xorg xinit
 sudo apt-get install -y mate-desktop-environment-core
+sudo apt-get install -y lightdm
+sudo reboot
 }
 
 main_menu
