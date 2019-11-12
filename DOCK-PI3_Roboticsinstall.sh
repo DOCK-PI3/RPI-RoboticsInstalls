@@ -32,6 +32,7 @@ function main_menu() {
 			14 "Rpi Instalar GUI DESKTOP XFCE4" \
 			15 "Rpi Instalar GUI DESKTOP MATE" \
 			70 "Rpi4 Instalar Retroarch 1.8.1" \
+			71 "Rpi4 Retroarch install CORES" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
@@ -53,11 +54,37 @@ function main_menu() {
 			14) xfce4_instalador ;;
 			15) mate_instalador ;;
 			70) RPI4_retroarch_instalador ;;
+			71) RPI4_retroarch_install_cores ;;
 			*)  break ;;
         esac
     done
 }
 
+function RPI4_retroarch_install_cores() {                                          
+dialog --infobox "... RPI4 Retroarch install CORES ..." 30 55 ; sleep 2
+cd ~
+mkdir EmUCoP-cores
+cd EmUCoP-cores
+
+git clone --depth 1 https://github.com/libretro/libretro-fceumm.git
+cd libretro-fceumm
+make -j4
+
+git clone --depth 1 https://github.com/libretro/snes9x2010.git
+cd snes9x2010
+make -j4
+
+git clone --depth 1 https://github.com/libretro/mupen64plus-libretro.git
+cd mupen64plus-libretro
+platform=rpi4 make -j4
+
+git clone --depth 1 https://github.com/libretro/pcsx_rearmed.git
+cd pcsx_rearmed
+platform=rpi4 make -j4
+dialog --infobox "... Cores creados en /home/pi/EmUCoP-cores/  \n\nCopie LOS .SO cores en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 2
+#cd && cp -R EmUCoP-cores/*.so /home/pi/.config/retroarch/cores
+#rm -R EmUCoP-cores/
+}
 
 function separador_menu() {                                          
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
@@ -151,12 +178,13 @@ dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,coment
 dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
 sudo apt install -y build-essential libasound2-dev libudev-dev libgles2-mesa-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
+sudo rm v1.8.1.tar.gz
 cd RetroArch-1.8.1
 CFLAGS='-mfpu=neon -mtune=cortex-a72 -march=armv8-a' ./configure --disable-opengl1 --enable-neon --enable-opengles3 --enable-opengles --disable-videocore
 make
 sudo make install
-# cd && sudo rm -R RetroArch-1.8.1/
-dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,Reiniciando el sistema en 7seg espere! ..." 30 55 ; sleep 7
+cd && sudo rm -R RetroArch-1.8.1/
+dialog --infobox "... RetroArch 1.8.1 instalado correctamente! ..." 30 55 ; sleep 7
 }
 
 
