@@ -31,6 +31,7 @@ function main_menu() {
 			13 "Rpi Instalar GUI DESKTOP LXDE" \
 			14 "Rpi Instalar GUI DESKTOP XFCE4" \
 			15 "Rpi Instalar GUI DESKTOP MATE" \
+			70 "Rpi4 Instalar Retroarch 1.8.1" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
@@ -51,6 +52,7 @@ function main_menu() {
 			13) lxde_instalador ;;
 			14) xfce4_instalador ;;
 			15) mate_instalador ;;
+			70) RPI4_retroarch_instalador ;;
 			*)  break ;;
         esac
     done
@@ -134,6 +136,29 @@ sudo make -j2 install
 # cd && sudo rm -R RetroArch-1.8.1/
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,Reiniciando el sistema en 7seg espere! ..." 30 55 ; sleep 7
 }
+
+function RPI4_retroarch_instalador() {                                          
+dialog --infobox "... RIP4 BETA Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
+sudo apt update
+dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
+# sudo apt upgrade -y
+#dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
+#sudo dpkg-reconfigure keyboard-configuration
+#dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
+#sudo dpkg-reconfigure locales
+#dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
+#sudo dpkg-reconfigure tzdata
+dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
+sudo apt install -y build-essential libasound2-dev libudev-dev libgles2-mesa-dev
+cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
+cd RetroArch-1.8.1
+CFLAGS='-mfpu=neon -mtune=cortex-a72 -march=armv8-a' ./configure --disable-opengl1 --enable-neon --enable-opengles3 --enable-opengles --disable-videocore
+make
+sudo make install
+# cd && sudo rm -R RetroArch-1.8.1/
+dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,Reiniciando el sistema en 7seg espere! ..." 30 55 ; sleep 7
+}
+
 
 function attractmode_instalador() {                                          
 dialog --infobox "... Script instalador de AttractMode en su version mas reciente ..." 30 55 ; sleep 3
