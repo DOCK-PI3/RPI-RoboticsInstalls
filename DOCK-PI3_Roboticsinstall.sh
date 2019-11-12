@@ -33,6 +33,7 @@ function main_menu() {
 			15 "Rpi Instalar GUI DESKTOP MATE" \
 			70 "Rpi4 Instalar Retroarch 1.8.1" \
 			71 "Rpi4 Retroarch install CORES" \
+			71 "Rpi4 Instalar AttracMode - Alternate version X" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
@@ -55,6 +56,7 @@ function main_menu() {
 			15) mate_instalador ;;
 			70) RPI4_retroarch_instalador ;;
 			71) RPI4_retroarch_install_cores ;;
+			72) RPI4_attractmode_instalador ;;
 			*)  break ;;
         esac
     done
@@ -90,13 +92,13 @@ cd ~
 cd EmUCoP-cores
 git clone --depth 1 https://github.com/libretro/pcsx_rearmed.git
 cd pcsx_rearmed
-platform=rpi4 make -j4
+platform=rpi4 make -j4 -f Makefile.libretro
 
 dialog --infobox "... Copiando cores de retroarch en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 2
 cd && cp -R EmUCoP-cores/libretro-fceumm/*.so /home/pi/.config/retroarch/cores
 cd && cp -R EmUCoP-cores/snes9x2010/*.so /home/pi/.config/retroarch/cores
 cd && cp -R EmUCoP-cores/mupen64plus-libretro/*.so /home/pi/.config/retroarch/cores
-cd && cp -R EmUCoP-cores/pcsx_rearmed/*.so /home/pi/.config/retroarch/cores
+cd && cp -R EmUCoP-cores/pcsx_rearmed/pcsx_rearmed_libretro.so /home/pi/.config/retroarch/cores/
 
 dialog --infobox "... Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 2
 sudo rm -R EmUCoP-cores/
@@ -218,7 +220,7 @@ sudo apt-get update
 cd /home/pi && mkdir develop
 
 # Instalar las dependencias para "sfml-pi" y Attract-Mode
-sudo apt-get install -y cmake libflac-dev libogg-dev libvorbis-dev libopenal-dev libfreetype6-dev libudev-dev libjpeg-dev libudev-dev libfontconfig1-dev
+sudo apt-get install -y make cmake pkg-config libflac-dev libogg-dev libvorbis-dev libopenal-dev libfreetype6-dev libudev-dev libjpeg-dev libudev-dev libfontconfig1-dev
 
 # Descargar y compilar sfml-pi
 cd /home/pi/develop
@@ -236,6 +238,53 @@ cd ffmpeg
 make -j4
 sudo make -j4 install
 sudo ldconfig
+
+# Descargar y compilar Attract-Mode
+cd /home/pi/develop
+git clone --depth 1 https://github.com/mickelson/attract attract
+cd attract
+make -j4 USE_GLES=1
+sudo make -j4 install USE_GLES=1
+sudo rm -r -f /home/pi/develop
+dialog --infobox " Una vez que inicie attract seleccione su idioma \n ,ya puede usar atrractmode. " 350 350 ; sleep 10
+dialog --infobox " Attract se instalo de forma correcta y con mmal ... ,reiniciando en 10s" 350 350 ; sleep 10
+# sudo shutdown -r now
+}
+
+function RPI4_attractmode_instalador() {                                          
+dialog --infobox "... RPI4 Script instalador de AttractMode en su version mas reciente ..." 30 55 ; sleep 3
+# Cierra ES para una mejor y mas rapida compilacion de attract y ffmpeg......
+sudo killall emulationstation
+sudo killall emulationstation-dev
+
+# ACTUALIZAR LISTA DE PAQUETES
+sudo apt-get update
+
+# Crear entorno para compilar
+cd /home/pi && mkdir develop
+
+# Instalar las dependencias para "sfml-pi" y Attract-Mode
+sudo apt-get install -y make cmake pkg-config libflac-dev libogg-dev libvorbis-dev libopenal-dev libfreetype6-dev libudev-dev libjpeg-dev libudev-dev libfontconfig1-dev
+sudo apt-get install -y libx11-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-ewmh-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxrandr2 libxrandr-dev libgles2-mesa-dev
+# Descargar y compilar sfml-pi
+cd /home/pi/develop
+git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
+mkdir sfml-pi/build; cd sfml-pi/build
+cmake -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libEGL.so -DFREETYPE_INCLUDE_DIR_freetype2=/usr/include -DFREETYPE_INCLUDE_DIR_ft2build=/usr/include/freetype2 -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libGLESv1_CM.so -DSFML_BCMHOST=1 -DSFML_OPENGL_ES=1 ..
+sudo make -j4 install
+sudo ldconfig
+
+# (más fácil): use los paquetes provistos (solo decodificación de video por software) 
+# Compilar FFmpeg con soporte mmal (decodificacion de video acelerada por hardware)
+sudo apt-get install libavutil-dev libavcodec-dev libavformat-dev libavfilter-dev libswscale-dev libavresample-dev
+
+# cd /home/pi/develop
+# git clone --depth 1 git://source.ffmpeg.org/ffmpeg.git
+# cd ffmpeg
+# ./configure --enable-mmal --disable-debug --enable-shared
+# make -j4
+# sudo make -j4 install
+# sudo ldconfig
 
 # Descargar y compilar Attract-Mode
 cd /home/pi/develop
