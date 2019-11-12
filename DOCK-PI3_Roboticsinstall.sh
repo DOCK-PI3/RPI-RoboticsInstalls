@@ -2,7 +2,7 @@
 version=" 1.5.9"
 infobox="${infobox}\n_______________________________________________________\n\n"
 infobox="${infobox}\n DOCK-PI3_Roboticsinstall creado para ayudar,\nInstalador de multiples herramientas y utilidades....."
-infobox="${infobox}\nAttractMode ,RetroArch 1.7.7 ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
+infobox="${infobox}\nAttractMode ,RetroArch 1.8.1 ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
 infobox="${infobox}\n\n\n_______________________________________________________\n\n"
 dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
 --title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
@@ -22,7 +22,7 @@ function main_menu() {
 			3 "Rpi Instalar PiVPN" \
             4 "Rpi Instalar PiHOLE" \
 			5 "Rpi Instalar WebMin" \
-			6 "Rpi Instalar Retroarch 1.7.7" \
+			6 "Rpi Instalar Retroarch 1.8.1" \
 			8 "Rpi Instalar AttracMode" \
 			9 "Rpi Instalar VsFTPd" \
 			10 "Rpi Desktop Instalar The Fan Club - Duck DNS Setup" \
@@ -113,7 +113,7 @@ dialog --infobox "... La instalación se ejecuto automáticamente en /usr/share/
 }
 
 function retroarch_instalador() {                                          
-dialog --infobox "... Script instalador de Retroarch en su version 1.7.7 ..." 30 55 ; sleep 3
+dialog --infobox "... Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
 sudo apt update
 dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
 # sudo apt upgrade -y
@@ -125,14 +125,14 @@ dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
 sudo dpkg-reconfigure tzdata
 dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
 sudo apt install -y build-essential libasound2-dev libudev-dev
-cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.7.7.tar.gz' && tar -zxvf v1.7.7.tar.gz
-cd RetroArch-1.7.7
+cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
+cd RetroArch-1.8.1
 # CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
 CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-qt --disable-sdl --enable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-networking --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
 make -j2
 sudo make -j2 install
-# cd && sudo rm -R RetroArch-1.7.7/
-dialog --infobox "... RetroArch instalado correctamente ,Reiniciando el sistema en 7seg espere! ..." 30 55 ; sleep 7
+# cd && sudo rm -R RetroArch-1.8.1/
+dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,Reiniciando el sistema en 7seg espere! ..." 30 55 ; sleep 7
 }
 
 function attractmode_instalador() {                                          
