@@ -31,9 +31,10 @@ function main_menu() {
 			13 "Rpi Instalar GUI DESKTOP LXDE" \
 			14 "Rpi Instalar GUI DESKTOP XFCE4" \
 			15 "Rpi Instalar GUI DESKTOP MATE" \
+			100 "-------------- Para RPI4 ----------------" \
 			70 "Rpi4 Instalar Retroarch 1.8.1" \
 			71 "Rpi4 Retroarch install CORES" \
-			71 "Rpi4 Instalar AttracMode - Alternate version X" \
+			72 "Rpi4 Instalar AttracMode - Alternate version X" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
@@ -54,7 +55,6 @@ function main_menu() {
 			13) lxde_instalador ;;
 			14) xfce4_instalador ;;
 			15) mate_instalador ;;
-			100) separador_menu  ;;
 			70) RPI4_retroarch_instalador ;;
 			71) RPI4_retroarch_install_cores ;;
 			72) RPI4_attractmode_instalador ;;
