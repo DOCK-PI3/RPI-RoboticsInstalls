@@ -61,29 +61,46 @@ function main_menu() {
 }
 
 function RPI4_retroarch_install_cores() {                                          
-dialog --infobox "... RPI4 Retroarch install CORES ..." 30 55 ; sleep 2
+dialog --infobox "... RPI4 Retroarch instalando core \n\n CORES: ..." 30 55 ; sleep 3
+
 cd ~
 mkdir EmUCoP-cores
 cd EmUCoP-cores
-
+dialog --infobox "... RPI4 Retroarch instalando core libretro-fceumm ..." 30 55 ; sleep 2
 git clone --depth 1 https://github.com/libretro/libretro-fceumm.git
 cd libretro-fceumm
 make -j4
 
+dialog --infobox "... RPI4 Retroarch instalando core snes9x2010 ..." 30 55 ; sleep 2
+cd ~
+cd EmUCoP-cores
 git clone --depth 1 https://github.com/libretro/snes9x2010.git
 cd snes9x2010
 make -j4
 
+dialog --infobox "... RPI4 Retroarch instalando core mupen64plus-libretro ..." 30 55 ; sleep 2
+cd ~
+cd EmUCoP-cores
 git clone --depth 1 https://github.com/libretro/mupen64plus-libretro.git
 cd mupen64plus-libretro
 platform=rpi4 make -j4
 
+dialog --infobox "... RPI4 Retroarch instalando core  pcsx_rearmed ..." 30 55 ; sleep 2
+cd ~
+cd EmUCoP-cores
 git clone --depth 1 https://github.com/libretro/pcsx_rearmed.git
 cd pcsx_rearmed
 platform=rpi4 make -j4
-dialog --infobox "... Cores creados en /home/pi/EmUCoP-cores/  \n\nCopie LOS .SO cores en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 2
-#cd && cp -R EmUCoP-cores/*.so /home/pi/.config/retroarch/cores
-#rm -R EmUCoP-cores/
+
+dialog --infobox "... Copiando cores de retroarch en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 2
+cd && cp -R EmUCoP-cores/libretro-fceumm/*.so /home/pi/.config/retroarch/cores
+cd && cp -R EmUCoP-cores/snes9x2010/*.so /home/pi/.config/retroarch/cores
+cd && cp -R EmUCoP-cores/mupen64plus-libretro/*.so /home/pi/.config/retroarch/cores
+cd && cp -R EmUCoP-cores/pcsx_rearmed/*.so /home/pi/.config/retroarch/cores
+
+dialog --infobox "... Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 2
+sudo rm -R EmUCoP-cores/
+
 }
 
 function separador_menu() {                                          
@@ -184,7 +201,7 @@ CFLAGS='-mfpu=neon -mtune=cortex-a72 -march=armv8-a' ./configure --disable-openg
 make
 sudo make install
 cd && sudo rm -R RetroArch-1.8.1/
-dialog --infobox "... RetroArch 1.8.1 instalado correctamente! ..." 30 55 ; sleep 7
+dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi4! ..." 30 55 ; sleep 7
 }
 
 
