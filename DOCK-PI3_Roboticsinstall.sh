@@ -63,50 +63,6 @@ function main_menu() {
     done
 }
 
-function RPI4_retroarch_install_cores() {                                          
-dialog --infobox "... RPI4 Retroarch instalando core \n\n CORES: ..." 30 55 ; sleep 3
-cd ~
-mkdir EmUCoP-cores
-cd EmUCoP-cores
-dialog --infobox "... RPI4 Retroarch instalando core libretro-fceumm ..." 30 55 ; sleep 2
-git clone --depth 1 https://github.com/libretro/libretro-fceumm.git
-cd libretro-fceumm
-make -j4
-
-dialog --infobox "... RPI4 Retroarch instalando core snes9x2010 ..." 30 55 ; sleep 2
-cd ~
-cd EmUCoP-cores
-git clone --depth 1 https://github.com/libretro/snes9x2010.git
-cd snes9x2010
-make -j4
-
-dialog --infobox "... RPI4 Retroarch instalando core mupen64plus-libretro ..." 30 55 ; sleep 2
-cd ~
-cd EmUCoP-cores
-git clone --depth 1 https://github.com/libretro/mupen64plus-libretro.git
-cd mupen64plus-libretro
-platform=rpi4 make -j4
-
-dialog --infobox "... RPI4 Retroarch instalando core  pcsx_rearmed ..." 30 55 ; sleep 2
-cd ~
-cd EmUCoP-cores
-git clone --depth 1 https://github.com/libretro/pcsx_rearmed.git
-cd pcsx_rearmed
-platform=rpi4 make -j4 -f Makefile.libretro
-
-dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 5
-cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
-cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
-
-cd && cp -R EmUCoP-cores/libretro-fceumm/*.so /home/pi/.config/retroarch/cores
-cd && cp -R EmUCoP-cores/snes9x2010/*.so /home/pi/.config/retroarch/cores
-cd && cp -R EmUCoP-cores/mupen64plus-libretro/*.so /home/pi/.config/retroarch/cores
-cd && cp -R EmUCoP-cores/pcsx_rearmed/pcsx_rearmed_libretro.so /home/pi/.config/retroarch/cores/
-
-dialog --infobox "... Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 2
-sudo rm -R /home/pi/EmUCoP-cores/
-sudo rm -R /home/pi/LR-CORES-RPI4/
-}
 
 function separador_menu() {                                          
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
@@ -189,7 +145,7 @@ dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,Reiniciando el si
 function RPI4_retroarch_instalador() {                                          
 dialog --infobox "... RIP4 BETA Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
 sudo apt update
-dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
+#dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
 # sudo apt upgrade -y
 #dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
 #sudo dpkg-reconfigure keyboard-configuration
@@ -312,6 +268,51 @@ sudo chown -R pi:pi /usr/local/bin/attract
 sudo chown -R pi:pi /usr/local/share/attract/
 sudo chown -R pi:pi /home/pi/.attract/
 dialog --infobox " Una vez que inicie attract seleccione su idioma \n ,ya puede usar atrractmode. " 350 350 ; sleep 10
+}
+
+function RPI4_retroarch_install_cores() {                                          
+dialog --infobox "... RPI4 Retroarch instalando core \n\n CORES: ..." 30 55 ; sleep 3
+cd ~
+mkdir EmUCoP-cores
+cd EmUCoP-cores
+dialog --infobox "... RPI4 Retroarch instalando core libretro-fceumm ..." 30 55 ; sleep 2
+git clone --depth 1 https://github.com/libretro/libretro-fceumm.git
+cd libretro-fceumm
+make -j4
+
+dialog --infobox "... RPI4 Retroarch instalando core snes9x2010 ..." 30 55 ; sleep 2
+cd ~
+cd EmUCoP-cores
+git clone --depth 1 https://github.com/libretro/snes9x2010.git
+cd snes9x2010
+make -j4
+
+dialog --infobox "... RPI4 Retroarch instalando core mupen64plus-libretro ..." 30 55 ; sleep 2
+cd ~
+cd EmUCoP-cores
+git clone --depth 1 https://github.com/libretro/mupen64plus-libretro.git
+cd mupen64plus-libretro
+platform=rpi4 make -j4
+
+dialog --infobox "... RPI4 Retroarch instalando core  pcsx_rearmed ..." 30 55 ; sleep 2
+cd ~
+cd EmUCoP-cores
+git clone --depth 1 https://github.com/libretro/pcsx_rearmed.git
+cd pcsx_rearmed
+platform=rpi4 make -j4 -f Makefile.libretro
+
+dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 5
+cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
+cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
+
+cd && cp -R EmUCoP-cores/libretro-fceumm/*.so /home/pi/.config/retroarch/cores
+cd && cp -R EmUCoP-cores/snes9x2010/*.so /home/pi/.config/retroarch/cores
+cd && cp -R EmUCoP-cores/mupen64plus-libretro/*.so /home/pi/.config/retroarch/cores
+cd && cp -R EmUCoP-cores/pcsx_rearmed/pcsx_rearmed_libretro.so /home/pi/.config/retroarch/cores/
+
+dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 2
+sudo rm -R /home/pi/EmUCoP-cores/
+sudo rm -R /home/pi/LR-CORES-RPI4/
 }
 
 function vsftpd_instalador() {                                          
