@@ -65,7 +65,6 @@ function main_menu() {
 
 function RPI4_retroarch_install_cores() {                                          
 dialog --infobox "... RPI4 Retroarch instalando core \n\n CORES: ..." 30 55 ; sleep 3
-
 cd ~
 mkdir EmUCoP-cores
 cd EmUCoP-cores
@@ -95,7 +94,7 @@ git clone --depth 1 https://github.com/libretro/pcsx_rearmed.git
 cd pcsx_rearmed
 platform=rpi4 make -j4 -f Makefile.libretro
 
-dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 2
+dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 5
 cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
 cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
 
