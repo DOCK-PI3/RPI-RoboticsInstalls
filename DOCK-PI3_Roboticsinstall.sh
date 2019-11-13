@@ -122,24 +122,32 @@ dialog --infobox "... La instalación se ejecuto automáticamente en /usr/share/
 function retroarch_instalador() {                                          
 dialog --infobox "... Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
 sudo apt update
-dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
+#dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
 # sudo apt upgrade -y
-dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
-sudo dpkg-reconfigure keyboard-configuration
-dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
-sudo dpkg-reconfigure locales
-dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
-sudo dpkg-reconfigure tzdata
+#dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
+#sudo dpkg-reconfigure keyboard-configuration
+#dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
+#sudo dpkg-reconfigure locales
+#dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
+#sudo dpkg-reconfigure tzdata
 dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
 sudo apt install -y build-essential libasound2-dev libudev-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
+sudo rm v1.8.1.tar.gz
 cd RetroArch-1.8.1
 # CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
 CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-qt --disable-sdl --enable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-networking --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
 make -j2
 sudo make -j2 install
-# cd && sudo rm -R RetroArch-1.8.1/
-dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,Reiniciando el sistema en 7seg espere! ..." 30 55 ; sleep 7
+cd && sudo rm -R RetroArch-1.8.1/
+dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
+dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 3
+
+cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
+cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
+
+dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 2
+sudo rm -R /home/pi/LR-CORES-RPI4/
 }
 
 function RPI4_retroarch_instalador() {                                          
@@ -206,14 +214,12 @@ make -j4 USE_GLES=1
 sudo make install USE_GLES=1
 sudo rm -r -f /home/pi/develop
 dialog --infobox " Una vez que inicie attract seleccione su idioma \n ,ya puede usar atrractmode. " 350 350 ; sleep 10
-dialog --infobox " Attract se instalo de forma correcta y con mmal ... ,reiniciando en 10s" 350 350 ; sleep 10
-
+dialog --infobox " Attract se instalo de forma correcta y con mmal ... " 350 350 ; sleep 5
 # sudo shutdown -r now
 }
 
 
 #################################################
-#bugfix crear attract.conf
 function RPI4_attractmode_instalador() {                                          
 dialog --infobox "... RPI4 Script instalador de AttractMode en su version mas reciente ..." 30 55 ; sleep 3
 # Cierra ES para una mejor y mas rapida compilacion de attract y ffmpeg......
