@@ -135,8 +135,7 @@ sudo apt install -y build-essential libasound2-dev libudev-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
 sudo rm v1.8.1.tar.gz
 cd RetroArch-1.8.1
-# CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
-CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-qt --disable-sdl --enable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-networking --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
+CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
 make -j2
 sudo make -j2 install
 cd && sudo rm -R RetroArch-1.8.1/
@@ -207,12 +206,25 @@ sudo make -j4 install
 sudo ldconfig
 
 # Descargar y compilar Attract-Mode
+cd && mkdir .attract
 cd /home/pi/develop
 git clone --depth 1 https://github.com/mickelson/attract attract
 cd attract
 make -j4 USE_GLES=1
 sudo make install USE_GLES=1
 sudo rm -r -f /home/pi/develop
+
+#### config full rescue ######
+cd && git clone --deep 1 https://github.com/DOCK-PI3/attract-config-rpi.git
+cp -R /home/pi/attract-config-rpi/attract/* /home/pi/.attract/
+cd && mkdir EmuCOPS
+cp -R /home/pi/attract-config-rpi/attract/MasOS/* /home/pi/EmuCOPS/
+sudo rm -R /home/pi/attract-config-rpi
+# sudo shutdown -r now
+# Permisos rutas attract #
+sudo chown -R pi:pi /usr/local/bin/attract
+sudo chown -R pi:pi /usr/local/share/attract/
+sudo chown -R pi:pi /home/pi/.attract/
 dialog --infobox " Una vez que inicie attract seleccione su idioma \n ,ya puede usar atrractmode. " 350 350 ; sleep 10
 dialog --infobox " Attract se instalo de forma correcta y con mmal ... " 350 350 ; sleep 5
 # sudo shutdown -r now
