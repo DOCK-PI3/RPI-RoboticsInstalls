@@ -231,12 +231,13 @@ sudo apt-get install -y git-core make cmake pkg-config libflac-dev libogg-dev li
 sudo apt-get install -y libx11-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-ewmh-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxrandr2 libxrandr-dev libgles2-mesa-dev
 
 # Descargar y compilar sfml-pi
-cd /home/pi/develop
-git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
-mkdir sfml-pi/build; cd sfml-pi/build
-cmake -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libEGL.so -DFREETYPE_INCLUDE_DIR_freetype2=/usr/include -DFREETYPE_INCLUDE_DIR_ft2build=/usr/include/freetype2 -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libGLESv1_CM.so -DSFML_BCMHOST=1 -DSFML_OPENGL_ES=1 ..
-sudo make -j4 install
-sudo ldconfig
+# cd /home/pi/develop
+# git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
+# mkdir sfml-pi/build; cd sfml-pi/build
+# cmake -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libEGL.so -DFREETYPE_INCLUDE_DIR_freetype2=/usr/include -DFREETYPE_INCLUDE_DIR_ft2build=/usr/include/freetype2 -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libGLESv1_CM.so -DSFML_BCMHOST=1 -DSFML_OPENGL_ES=1 ..
+# sudo make -j4 install
+# sudo ldconfig
+sudo apt-get install -y libsfml-dev
 
 # Compilar FFmpeg con soporte mmal (decodificacion de video acelerada por hardware)
 cd /home/pi/develop
