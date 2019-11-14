@@ -184,6 +184,7 @@ cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
 sudo rm -R /home/pi/rpi-retroarch-bios/
 
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
+dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi4! ..." 30 55 ; sleep 7
 }
 
 function RPI4_retroarch_instalador() {                                          
@@ -207,6 +208,15 @@ CFLAGS='-mfpu=neon -mtune=cortex-a72 -march=armv8-a' ./configure --disable-openg
 make
 sudo make install
 cd && sudo rm -R RetroArch-1.8.1/
+
+##### instalar bios base
+dialog --infobox "... Descargando y Copiando BIOS BASE para retroarch en /home/pi/.config/retroarch/system ..." 30 55 ; sleep 3
+
+cd && git clone --depth 1 https://github.com/DOCK-PI3/rpi-retroarch-bios.git
+cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
+sudo rm -R /home/pi/rpi-retroarch-bios/
+
+dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi4! ..." 30 55 ; sleep 7
 }
 
