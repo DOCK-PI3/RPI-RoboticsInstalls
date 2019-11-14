@@ -166,7 +166,7 @@ dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /
 cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
 cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
 sudo rm -R /home/pi/LR-CORES-RPI4/
-
+cd && cp RPI-RoboticsInstalls/configs/rpi3/retroarch.cfg /home/pi/.config/retroarch/
 dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
 
 ##### instalar assets
@@ -263,12 +263,12 @@ sudo make install USE_GLES=1
 sudo rm -r -f /home/pi/develop
 
 #### config full rescue ######
-cd && git clone --deep 1 https://github.com/DOCK-PI3/attract-config-rpi.git
-cp -R /home/pi/attract-config-rpi/attract/* /home/pi/.attract/
+cd && git clone --deep 1 https://github.com/DOCK-PI3/EmuCOPS-Attract-autoconf.git
+cp -R /home/pi/EmuCOPS-Attract-autoconf/attract/* /home/pi/.attract/
 cd && mkdir EmuCOPS
-cp -R /home/pi/attract-config-rpi/attract/MasOS/* /home/pi/EmuCOPS/
-sudo rm -R /home/pi/attract-config-rpi
-# sudo shutdown -r now
+cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmuCOPS/
+sudo rm -R /home/pi/EmuCOPS-Attract-autoconf
+
 # Permisos rutas attract #
 sudo chown -R pi:pi /usr/local/bin/attract
 sudo chown -R pi:pi /usr/local/share/attract/
@@ -324,12 +324,13 @@ sudo make -j4 install USE_GLES=1
 sudo rm -r -f /home/pi/develop
 
 #### config full rescue ######
-cd && git clone --deep 1 https://github.com/DOCK-PI3/attract-config-rpi.git
-cp -R /home/pi/attract-config-rpi/attract/* /home/pi/.attract/
+cd && git clone --deep 1 https://github.com/DOCK-PI3/EmuCOPS-Attract-autoconf.git
+cp -R /home/pi/EmuCOPS-Attract-autoconf/attract/* /home/pi/.attract/
 cd && mkdir EmuCOPS
-cp -R /home/pi/attract-config-rpi/attract/MasOS/* /home/pi/EmuCOPS/
-sudo rm -R /home/pi/attract-config-rpi
-# sudo shutdown -r now
+cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmuCOPS/
+sudo rm -R /home/pi/EmuCOPS-Attract-autoconf
+
+
 # Permisos rutas attract #
 sudo chown -R pi:pi /usr/local/bin/attract
 sudo chown -R pi:pi /usr/local/share/attract/
