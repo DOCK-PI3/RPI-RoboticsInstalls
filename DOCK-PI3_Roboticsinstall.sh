@@ -132,10 +132,14 @@ sudo apt update
 #sudo dpkg-reconfigure tzdata
 dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
 sudo apt install -y build-essential libasound2-dev libudev-dev
+sudo apt-get install -y make git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
 sudo rm v1.8.1.tar.gz
 cd RetroArch-1.8.1
 CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
+#CFLAGS = '-mfpu=neon' ./configure --disable-sdl --enable-sdl2 --disable-oss --disable-al --disable-jack --disable-qt
+#CFLAGS = '-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1 --disable-opengl_core
+#CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-networking --disable-sdl --disable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
 make -j2
 sudo make -j2 install
 cd && sudo rm -R RetroArch-1.8.1/
@@ -144,9 +148,18 @@ dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /
 
 cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
 cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
-
-dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 2
 sudo rm -R /home/pi/LR-CORES-RPI4/
+
+dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
+
+##### instalar assets
+dialog --infobox "... Descargando y Copiando ASSETS para retroarch en /home/pi/.config/retroarch/assets ..." 30 55 ; sleep 3
+
+cd && git clone --depth 1 https://github.com/libretro/retroarch-assets.git
+cp -R retroarch-assets/* /home/pi/.config/retroarch/assets/
+sudo rm -R /home/pi/retroarch-assets/
+
+dialog --infobox "... Descarga de todos los assets: correcta ..." 30 55 ; sleep 3
 }
 
 function RPI4_retroarch_instalador() {                                          
@@ -161,7 +174,8 @@ sudo apt update
 #dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
 #sudo dpkg-reconfigure tzdata
 dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
-sudo apt install -y build-essential libasound2-dev libudev-dev libgles2-mesa-dev
+sudo apt-get install -y build-essential libasound2-dev libudev-dev libgles2-mesa-dev
+#sudo apt-get install -y build-essential libxkbcommon-dev zlib1g-dev libfreetype6-dev libegl1-mesa-dev libgles2-mesa-dev libgbm-dev nvidia-cg-toolkit nvidia-cg-dev libavcodec-dev libsdl2-dev libsdl-image1.2-dev libxml2-dev yasm
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
 sudo rm v1.8.1.tar.gz
 cd RetroArch-1.8.1
