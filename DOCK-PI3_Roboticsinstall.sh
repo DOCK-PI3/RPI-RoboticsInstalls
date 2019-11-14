@@ -74,12 +74,14 @@ function attract_inicio() {
 dialog --infobox "... Activa/Desactiva ejecutar attract mode en el inicio ..." 30 55 ; sleep 3
     if [[ -f /etc/init.d/attract_autolaunch.sh ]]; then
 	dialog --infobox "... Desactivando ejecutar attract mode en el inicio ..." 30 55 ; sleep 3	
+		sudo update-rc.d -f attract_autolaunch.sh remove
 		sudo rm -R /etc/init.d/attract_autolaunch.sh
     else
         dialog --infobox "... Activando ejecutar attract mode en el inicio ..." 30 55 ; sleep 3
 		cd && sudo cp -R RPI-RoboticsInstalls/configs/attract_autolaunch.sh /etc/init.d/
 		sudo chmod +x /etc/init.d/attract_autolaunch.sh
 		sudo chown -R pi:pi /etc/init.d/attract_autolaunch.sh
+		sudo update-rc.d attract_autolaunch.sh defaults
 	fi
 }
 
