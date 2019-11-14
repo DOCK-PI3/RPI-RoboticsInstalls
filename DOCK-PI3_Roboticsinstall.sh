@@ -23,7 +23,7 @@ function main_menu() {
             4 "Rpi Instalar PiHOLE" \
 			5 "Rpi Instalar WebMin" \
 			6 "Rpi Instalar Retroarch 1.8.1" \
-			8 "Rpi Instalar AttracMode" \
+			8 "Rpi Instalar AttractMode" \
 			9 "Rpi Instalar VsFTPd" \
 			10 "Rpi Desktop Instalar The Fan Club - Duck DNS Setup" \
 			11 "Rpi Instalar Mumble Server VOIP" \
@@ -34,7 +34,9 @@ function main_menu() {
 			100 "-------------- Para RPI4 ----------------" \
 			70 "Rpi4 Instalar Retroarch 1.8.1" \
 			71 "Rpi4 Retroarch install CORES" \
-			72 "Rpi4 Instalar AttracMode - Alternate version X" \
+			72 "Rpi4 Instalar AttractMode - Alternate version X" \
+			200 "Rpi4 y 3 AUTO Ejecutar AttractMode al inicio" \
+			100 "-------------- OPCIONES Roboticsinstall ----------------" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
@@ -58,14 +60,27 @@ function main_menu() {
 			70) RPI4_retroarch_instalador ;;
 			71) RPI4_retroarch_install_cores ;;
 			72) RPI4_attractmode_instalador ;;
+			200) attract_inicio ;;
 			*)  break ;;
         esac
     done
 }
 
-
 function separador_menu() {                                          
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
+}
+
+function attract_inicio() {                                          
+dialog --infobox "... Activa/Desactiva ejecutar attract mode en el inicio ..." 30 55 ; sleep 3
+    if [[ -f /etc/init.d/attract_autolaunch.sh ]]; then
+	dialog --infobox "... Desactivando ejecutar attract mode en el inicio ..." 30 55 ; sleep 3	
+		sudo rm -R /etc/init.d/attract_autolaunch.sh
+    else
+        dialog --infobox "... Activando ejecutar attract mode en el inicio ..." 30 55 ; sleep 3
+		cd && sudo cp -R RPI-RoboticsInstalls/configs/attract_autolaunch.sh /etc/init.d/
+		sudo chmod +x /etc/init.d/attract_autolaunch.sh
+		sudo chown -R pi:pi /etc/init.d/attract_autolaunch.sh
+	fi
 }
 
 function robotics_update() {                                          
