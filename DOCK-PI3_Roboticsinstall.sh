@@ -35,7 +35,7 @@ function main_menu() {
 			70 "Rpi4 Instalar Retroarch 1.8.1" \
 			71 "Rpi4 Retroarch install CORES" \
 			72 "Rpi4 Instalar AttractMode - Alternate version X" \
-			200 "Rpi4 y 3 AUTO Ejecutar AttractMode al inicio no vaa -reparar" \
+			200 "Rpi4 y 3 AUTO Ejecutar AttractMode:Crear tarea programada" \
 			100 "-------------- OPCIONES Roboticsinstall ----------------" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
@@ -166,17 +166,18 @@ dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /
 cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
 cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
 sudo rm -R /home/pi/LR-CORES-RPI4/
+##### cargar configuracion retroarch
 cd && cp RPI-RoboticsInstalls/configs/rpi3/retroarch.cfg /home/pi/.config/retroarch/
 dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
 
-##### instalar assets
+##### instalar assets rpi3
 dialog --infobox "... Descargando y Copiando ASSETS para retroarch en /home/pi/.config/retroarch/assets ..." 30 55 ; sleep 3
 
 cd && git clone --depth 1 https://github.com/libretro/retroarch-assets.git
 cp -R retroarch-assets/* /home/pi/.config/retroarch/assets/
 sudo rm -R /home/pi/retroarch-assets/
 
-##### instalar bios base
+##### instalar bios base retroarch
 dialog --infobox "... Descargando y Copiando BIOS BASE para retroarch en /home/pi/.config/retroarch/system ..." 30 55 ; sleep 3
 
 cd && git clone --depth 1 https://github.com/DOCK-PI3/rpi-retroarch-bios.git
@@ -258,8 +259,8 @@ cd && mkdir .attract
 cd /home/pi/develop
 git clone --depth 1 https://github.com/mickelson/attract attract
 cd attract
-make -j4 USE_GLES=1
-sudo make install USE_GLES=1
+make -j3 USE_GLES=1
+sudo make -j3 install USE_GLES=1
 sudo rm -r -f /home/pi/develop
 
 #### config full rescue ######
