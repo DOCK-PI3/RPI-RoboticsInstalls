@@ -35,7 +35,7 @@ function main_menu() {
 			70 "Rpi4 Instalar Retroarch 1.8.1" \
 			71 "Rpi4 Retroarch install CORES" \
 			72 "Rpi4 Instalar AttractMode - Alternate version X" \
-			200 "Rpi4 y 3 AUTO Ejecutar AttractMode al inicio" \
+			200 "Rpi4 y 3 AUTO Ejecutar AttractMode al inicio no vaa -reparar" \
 			100 "-------------- OPCIONES Roboticsinstall ----------------" \
 			69 "----- ACTUALIZAR Roboticsinstall -----" \
 			2>&1 > /dev/tty)
@@ -496,7 +496,6 @@ dialog --infobox "... Instalar SAMBA server - SMB..." 30 55 ; sleep 3
 sudo apt-get update
 sudo apt-get install -y samba samba-common-bin
 dialog --infobox "... El directorio /home/pi/ se comparte por defecto en modo lectura\nAhora crearemos el directorio sharesd en /home/pi ,aqui tiene permisos de escritura..." 30 55 ; sleep 5
-mkdir /home/pi/sharesd
 sudo rm /etc/samba/smb.conf
 cd && sudo cp RPI-RoboticsInstalls/configs/smb.conf /etc/samba/
 dialog --infobox "... Ahora crearemos un usuario para acceder a samba sharesd\n\nEl nombre por defecto es pi\n\nIntrodusca usted la contraseña..." 30 55 ; sleep 7
