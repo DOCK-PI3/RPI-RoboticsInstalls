@@ -2,7 +2,7 @@
 version=" 1.5.9"
 infobox="${infobox}\n_______________________________________________________\n\n"
 infobox="${infobox}\n DOCK-PI3_Roboticsinstall creado para ayudar,\nInstalador de multiples herramientas y utilidades....."
-infobox="${infobox}\nAttractMode ,RetroArch 1.8.1 ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
+infobox="${infobox}\nAttractMode 2.6,RetroArch 1.8.1 ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
 infobox="${infobox}\n\n\n_______________________________________________________\n\n"
 dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
 --title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
@@ -147,7 +147,7 @@ sudo apt update
 #sudo dpkg-reconfigure locales
 #dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
 #sudo dpkg-reconfigure tzdata
-dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
+dialog --infobox "... Compilar e instalar RetroArch 1.8.1, iniciando espere! ..." 30 55 ; sleep 5
 sudo apt install -y build-essential libasound2-dev libudev-dev
 sudo apt-get install -y make git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
@@ -161,18 +161,31 @@ make -j2
 sudo make -j2 install
 cd && sudo rm -R RetroArch-1.8.1/
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
-dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 3
-
+#### DESCARGA Y COMPILACION DE CORES ,EMULADORES ....
+dialog --infobox "... Descargando y Copiando cores para retroarch en /home/pi/.config/retroarch/cores\n\n ..." 30 55 ; sleep 3
 cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
 cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
 sudo rm -R /home/pi/LR-CORES-RPI4/
+
+##### Compilar core lr flycast
+# cd && git clone --depth 1 https://github.com/reicast/reicast-emulator
+# cd reicast-emulator/reicast/linux/
+# make platform=rpi3
+# cp
+# rm -R 
+dialog --infobox "... Creando la ultima version del core FLYCAST para su sistema ...\n\n- Iniciando Construccion del core - ESPERE .... ..." 30 55 ; sleep 5
+cd && git clone --depth 1 https://github.com/libretro/flycast.git
+cd flycast/
+make platform=rpi3
+cp flycast_libretro.so /home/pi/.config/retroarch/cores/
+cd && sudo rm -R flycast/
+dialog --infobox "... FlyCast y mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
+
 ##### cargar configuracion retroarch
 cd && cp RPI-RoboticsInstalls/configs/rpi3/retroarch.cfg /home/pi/.config/retroarch/
-dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
 
 ##### instalar assets rpi3
 dialog --infobox "... Descargando y Copiando ASSETS para retroarch en /home/pi/.config/retroarch/assets ..." 30 55 ; sleep 3
-
 cd && git clone --depth 1 https://github.com/libretro/retroarch-assets.git
 cp -R retroarch-assets/* /home/pi/.config/retroarch/assets/
 sudo rm -R /home/pi/retroarch-assets/
@@ -185,7 +198,7 @@ cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
 sudo rm -R /home/pi/rpi-retroarch-bios/
 
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
-dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi4! ..." 30 55 ; sleep 7
+dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
 }
 
 function RPI4_retroarch_instalador() {                                          
