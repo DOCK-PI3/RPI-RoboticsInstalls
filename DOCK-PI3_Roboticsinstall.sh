@@ -248,14 +248,14 @@ sudo apt-get update
 cd /home/pi && mkdir develop
 
 # Instalar las dependencias para "sfml-pi" y Attract-Mode
-sudo apt-get install -y make cmake pkg-config libflac-dev libogg-dev libvorbis-dev libopenal-dev libfreetype6-dev libudev-dev libjpeg-dev libudev-dev libfontconfig1-dev
-
+sudo apt-get install -y pkg-config libfontconfig1-dev
+sudo apt-get install -y cmake libflac-dev libogg-dev libvorbis-dev libopenal-dev libjpeg8-dev libfreetype6-dev libudev-dev libraspberrypi-dev
 # Descargar y compilar sfml-pi
 cd /home/pi/develop
 git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
 mkdir sfml-pi/build; cd sfml-pi/build
 cmake .. -DSFML_RPI=1 -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libbrcmEGL.so -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libbrcmGLESv2.so
-sudo make -j4 install
+sudo make install
 sudo ldconfig
 
 # Compilar FFmpeg con soporte mmal (decodificacion de video acelerada por hardware)
@@ -263,8 +263,8 @@ cd /home/pi/develop
 git clone --depth 1 git://source.ffmpeg.org/ffmpeg.git
 cd ffmpeg
 ./configure --enable-mmal --disable-debug --enable-shared
-make -j4
-sudo make -j4 install
+make -j3
+sudo make install
 sudo ldconfig
 
 # Descargar y compilar Attract-Mode
