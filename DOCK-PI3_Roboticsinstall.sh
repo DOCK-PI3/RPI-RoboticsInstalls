@@ -1,5 +1,5 @@
 #!/bin/bash
-version=" 1.5.9"
+version=" 1.9.8"
 infobox="${infobox}\n_______________________________________________________\n\n"
 infobox="${infobox}\n DOCK-PI3_Roboticsinstall creado para ayudar,\nInstalador de multiples herramientas y utilidades....."
 infobox="${infobox}\nAttractMode 2.6,RetroArch 1.8.1 ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
@@ -35,8 +35,11 @@ function main_menu() {
 			71 "Rpi4 Retroarch install CORES" \
 			72 "Rpi4 Instalar AttractMode - Alternate version X" \
 			200 "Rpi4 y 3 AUTO Ejecutar AttractMode:Crear tarea programada" \
-			100 "-------------- OPCIONES Roboticsinstall ----------------" \
-			69 "----- ACTUALIZAR Roboticsinstall -----" \
+			100 "-------------- OPCIONES ATTRACTMODE AUTOSTART ----------------" \
+			300 "Rpi AttractMode inicio auto CLI - version Raspian Lite" \
+			320 "Rpi AttractMode inicio auto Escritorio - version Raspian Desktop" \
+			100 "-------------- Roboticsinstall ACTUALIZAR VERSION ----------------" \
+			69 "----- ACTUALIZAR herramienta Roboticsinstall -----" \
 			2>&1 > /dev/tty)
 
         case "$choice" in
@@ -59,6 +62,8 @@ function main_menu() {
 			70) RPI4_retroarch_instalador ;;
 			71) RPI4_retroarch_install_cores ;;
 			72) RPI4_attractmode_instalador ;;
+			300) consola_attract_autolaunch  ;;
+            320) desktop_attract_autolaunch  ;;
 			200) attract_inicio ;;
 			*)  break ;;
         esac
@@ -69,39 +74,17 @@ function separador_menu() {
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
 }
 
-function menu2() {                                          
-dialog --infobox "... Activa/Desactiva attract mode en el inicio ..." 30 55 ; sleep 3
-      local choice
-
-    while true; do
-        choice=$(dialog --backtitle "$BACKTITLE" --title " MAIN MENU " \
-            --ok-label OK --cancel-label Exit \
-            --menu2 "Que accion te gustaria realizar?" 25 75 20 \
-            100 "-------------- RPI ATTRACT MENU AUTOLAUNCH ----------------" \
-			1 "Rpi AttractMode inicio auto CLI - version Raspian Lite" \
-			2 "Rpi AttractMode inicio auto Escritorio - version Raspian Desktop" \
-			2>&1 > /dev/tty)
-
-        case "$choice" in
-			100) separador_menu  ;;
-            1) consola_attract_autolaunch  ;;
-            2) desktop_attract_autolaunch  ;;
-			*)  break ;;
-        esac
-    done  
-}
-
 function consola_attract_autolaunch() {                                          
-dialog --infobox "... ATTRACT AUTO EN CLI - CONSOLA ..." 30 55 ; sleep 2
+dialog --infobox "... INICIO DE ATTRACT AUTO EN CLI - CONSOLA ..." 30 55 ; sleep 2
 cd && cp .bashrc .bashrc_back
 cd && sudo cp RPI-RoboticsInstalls/configs/rpi3/.bashrc /home/pi/
 sudo chown -R pi:pi /home/pi/.bashrc
-
-#sudo reboot
+dialog --infobox "... REINICIANDO CON ATTRACT EN MODO CLI - CONSOLA ..." 30 55 ; sleep 2
+sudo reboot
 }
 
 function desktop_attract_autolaunch() {                                          
-dialog --infobox "... ATTRACT AUTO EN DESKTOP ..." 30 55 ; sleep 2
+dialog --infobox "... INICIO DE ATTRACT AUTO EN DESKTOP ..." 30 55 ; sleep 2
 cd && sudo cp RPI-RoboticsInstalls/configs/icon_attract.png /usr/share/icons/
 sudo touch /usr/local/share/applications/attract.desktop
 sudo cat > /usr/local/share/applications/attract.desktop <<_EOF_
