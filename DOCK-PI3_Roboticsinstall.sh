@@ -1,11 +1,12 @@
 #!/bin/bash
-version=" 1.9.8"
+version=" 1.9.9"
 infobox="${infobox}\n_______________________________________________________\n\n"
-infobox="${infobox}\n DOCK-PI3_Roboticsinstall creado para ayudar,\nInstalador de multiples herramientas y utilidades....."
-infobox="${infobox}\nAttractMode 2.6,RetroArch 1.8.1 ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS y MasOS."
+infobox="${infobox}\n       DOCK-PI3_Roboticsinstall creado por vicio.....\nInstalador de multiples herramientas y utilidades.....\n"
+infobox="${infobox}\n\n_______________________________________________________\n\n"
+infobox="${infobox}\nAttractMode 2.6,RetroArch 1.8.1 ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS ,EmuCOPS NOOBs v1 y MasOS."
 infobox="${infobox}\n\n\n_______________________________________________________\n\n"
 dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
---title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
+--title "Instalador de sistemas y utilidades rpi 4b, 3b y 3b+ (by EmulOS TEAM)" \
 --msgbox "${infobox}" 35 110
 
 function main_menu() {
@@ -198,7 +199,7 @@ dialog --infobox "... CREANDO INICIO DE ATTRACT AUTO EN CLI - CONSOLA ..." 30 55
 cd && cp .bashrc .bashrc_back
 cd && sudo cp RPI-RoboticsInstalls/configs/rpi3/.bashrc /home/pi/
 sudo chown -R pi:pi /home/pi/.bashrc
-dialog --infobox "... EMUCOPS INSTALADO, REINICIANDO CON ATTRACT EN MODO CLI - CONSOLA ..." 30 55 ; sleep 5
+dialog --infobox "... EMUCOPS INSTALADO, REINICIANDO CON ATTRACT EN MODO CLI - CONSOLA\n\nOpcional : Puede instalar SAMBA para mas comodidad - RECOMENDADO! ..." 30 55 ; sleep 5
 
 sudo shutdown -r now
 ###### EMUCOPS FIN,FIN ATTRACT,RETROARCH INSTALL Y CONFIG RPI3 ###########################
