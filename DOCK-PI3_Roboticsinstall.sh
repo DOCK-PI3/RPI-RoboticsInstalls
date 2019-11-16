@@ -113,13 +113,13 @@ sudo rm -R /home/pi/LR-CORES-RPI4/
 # make platform=rpi3
 # cp
 # rm -R 
-dialog --infobox "... Creando la ultima version del core FLYCAST para su sistema ...\n\n- Iniciando Construccion del core - ESPERE .... ..." 30 55 ; sleep 5
-cd && git clone --depth 1 https://github.com/libretro/flycast.git
-cd flycast/
-make platform=rpi3
-cp flycast_libretro.so /home/pi/.config/retroarch/cores/
-cd && sudo rm -R flycast/
-dialog --infobox "... FlyCast y mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
+# dialog --infobox "... Creando la ultima version del core FLYCAST para su sistema ...\n\n- Iniciando Construccion del core - ESPERE .... ..." 30 55 ; sleep 5
+# cd && git clone --depth 1 https://github.com/libretro/flycast.git
+# cd flycast/
+# make platform=rpi3
+# cp flycast_libretro.so /home/pi/.config/retroarch/cores/
+# cd && sudo rm -R flycast/
+# dialog --infobox "... FlyCast y mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
 
 ##### cargar configuracion retroarch
 cd && cp RPI-RoboticsInstalls/configs/rpi3/retroarch.cfg /home/pi/.config/retroarch/
