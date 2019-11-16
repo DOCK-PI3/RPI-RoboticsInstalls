@@ -7,7 +7,6 @@ infobox="${infobox}\n\n\n_______________________________________________________
 dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
 --title "Instalador de sistemas y utilidades rpi 3b b+(by Mabedeep - The MasOS TEAM)" \
 --msgbox "${infobox}" 35 110
-ver=1.5;
 
 function main_menu() {
     local choice
@@ -15,7 +14,7 @@ function main_menu() {
     while true; do
         choice=$(dialog --backtitle "$BACKTITLE" --title " MAIN MENU " \
             --ok-label OK --cancel-label Exit \
-            --menu "$ver - Que accion te gustaria realizar?" 25 75 20 \
+            --menu "Version: $version - Que accion te gustaria realizar?" 25 75 20 \
             100 "-------------- Para RPI ----------------" \
 			1 "Rpi Instalar MasOS-Setup script" \
 			2 "Rpi Instalar EmulOS-Setup script" \
