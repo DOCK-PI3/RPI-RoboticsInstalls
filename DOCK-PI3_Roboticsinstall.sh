@@ -34,7 +34,6 @@ function main_menu() {
 			70 "Rpi4 Instalar Retroarch 1.8.1" \
 			71 "Rpi4 Retroarch install CORES" \
 			72 "Rpi4 Instalar AttractMode - Alternate version X" \
-			200 "Rpi4 y 3 AUTO Ejecutar AttractMode:Crear tarea programada" \
 			100 "-------------- OPCIONES ATTRACTMODE AUTOSTART ----------------" \
 			300 "Rpi AttractMode inicio auto CLI - version Raspian Lite" \
 			320 "Rpi AttractMode inicio auto Escritorio - version Raspian Desktop" \
@@ -64,7 +63,6 @@ function main_menu() {
 			72) RPI4_attractmode_instalador ;;
 			300) consola_attract_autolaunch  ;;
             320) desktop_attract_autolaunch  ;;
-			200) attract_inicio ;;
 			*)  break ;;
         esac
     done
@@ -584,4 +582,3 @@ sudo reboot
 }
 
 main_menu
-menu2
