@@ -121,7 +121,7 @@ sudo cp /usr/local/share/applications/attract.desktop /home/pi/.config/autostart
 
 #sudo reboot
 }
-attract_autoini_menu
+
 
 function robotics_update() {                                          
 dialog --infobox "... Actualiza la herramienta Roboticsinstall..." 30 55 ; sleep 3
@@ -601,3 +601,4 @@ sudo reboot
 }
 
 main_menu
+attract_autoini_menu
