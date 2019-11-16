@@ -70,20 +70,59 @@ function separador_menu() {
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
 }
 
-function attract_inicio() {                                          
-dialog --infobox "... Activa/Desactiva ejecutar attract mode en el inicio ..." 30 55 ; sleep 3
-    if [[ -f /etc/init.d/attract_autolaunch.sh ]]; then
-	dialog --infobox "... Desactivando ejecutar attract mode en el inicio ..." 30 55 ; sleep 3	
-		sudo update-rc.d -f attract_autolaunch.sh remove
-		sudo rm -R /etc/init.d/attract_autolaunch.sh
-    else
-        dialog --infobox "... Activando ejecutar attract mode en el inicio ..." 30 55 ; sleep 3
-		cd && sudo cp -R RPI-RoboticsInstalls/configs/attract_autolaunch.sh /etc/init.d/
-		sudo chmod +x /etc/init.d/attract_autolaunch.sh
-		sudo chown -R pi:pi /etc/init.d/attract_autolaunch.sh
-		sudo update-rc.d attract_autolaunch.sh defaults
-	fi
+function attract_autoini_menu() {                                          
+dialog --infobox "... Activa/Desactiva attract mode en el inicio ..." 30 55 ; sleep 3
+      local choice
+
+    while true; do
+        choice=$(dialog --backtitle "$BACKTITLE" --title " MAIN MENU " \
+            --ok-label OK --cancel-label Exit \
+            --menu "Que accion te gustaria realizar?" 25 75 20 \
+            100 "-------------- RPI ATTRACT MENU AUTOLAUNCH ----------------" \
+			1 "Rpi AttractMode inicio auto CLI - version Raspian Lite" \
+			2 "Rpi AttractMode inicio auto Escritorio - version Raspian Desktop" \
+			2>&1 > /dev/tty)
+
+        case "$choice" in
+			100) separador_menu  ;;
+            1) consola_attract_autolaunch  ;;
+            2) desktop_attract_autolaunch  ;;
+			*)  break ;;
+        esac
+    done  
 }
+
+function consola_attract_autolaunch() {                                          
+dialog --infobox "... ATTRACT AUTO EN CLI - CONSOLA ..." 30 55 ; sleep 2
+cd && cp .bashrc .bashrc_back
+cd && sudo cp RPI-RoboticsInstalls/configs/rpi3/.bashrc /home/pi/
+sudo chown -R pi:pi /home/pi/.bashrc
+
+#sudo reboot
+}
+
+function desktop_attract_autolaunch() {                                          
+dialog --infobox "... ATTRACT AUTO EN DESKTOP ..." 30 55 ; sleep 2
+cd && sudo cp RPI-RoboticsInstalls/configs/icon_attract.png /usr/share/icons/
+sudo touch /usr/local/share/applications/attract.desktop
+sudo cat > /usr/local/share/applications/attract.desktop <<_EOF_
+[Desktop Entry]
+Version=1.0
+Name=AttractMode
+Comment=EMUCOPS Emulator Frontend
+Exec=/usr/local/bin/attract
+Terminal=false
+Type=Application
+Categories=Game
+Icon=/usr/share/icons/icon_attract.png
+Name[es_ES]=Attract
+_EOF_
+cd /home/pi/.config/ && sudo mkdir autostart
+sudo cp /usr/local/share/applications/attract.desktop /home/pi/.config/autostart/
+
+#sudo reboot
+}
+attract_autoini_menu
 
 function robotics_update() {                                          
 dialog --infobox "... Actualiza la herramienta Roboticsinstall..." 30 55 ; sleep 3
