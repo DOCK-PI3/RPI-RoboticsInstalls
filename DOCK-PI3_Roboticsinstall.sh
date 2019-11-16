@@ -601,4 +601,4 @@ sudo reboot
 }
 
 main_menu
-attract_autoini_menu
+#attract_autoini_menu
