@@ -32,4 +32,6 @@
  
  
  
- NOTA: Para instalar EmuCOPS se recomienda Raspbian stretch LITE ,si usa la Desktop abra el raspi-config y cambie el boot a CLI inicio auto PI.
+ NOTA: Para instalar EmuCOPS se recomienda Raspbian stretch LITE ,si usa la Desktop: abra el raspi-config y cambie el boot a CLI inicio auto PI.
+
+Opcional porque puede acceder por WinCSP pero se RECOMIENDA instalar SAMBA.! 
