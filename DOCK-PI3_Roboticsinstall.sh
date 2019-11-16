@@ -15,7 +15,7 @@ function main_menu() {
         choice=$(dialog --backtitle "$BACKTITLE" --title " MAIN MENU " \
             --ok-label OK --cancel-label Exit \
             --menu "Version: $version - Que accion te gustaria realizar?" 25 75 20 \
-            100 "-------------- Para RPI ----------------" \
+            100 "-------------- Para RPI3 ----------------" \
 			1 "Rpi Instalar MasOS-Setup script" \
 			2 "Rpi Instalar EmulOS-Setup script" \
 			3 "Rpi Instalar PiVPN" \
