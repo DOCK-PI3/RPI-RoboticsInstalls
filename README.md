@@ -29,3 +29,7 @@
  Ejecutar el script
  
  ./DOCK-PI3_Roboticsinstall.sh
+ 
+ 
+ 
+ NOTA: Para instalar EmuCOPS se recomienda Raspbian stretch LITE ,si usa la Desktop abra el raspi-config y cambie el boot a CLI inicio auto PI.
