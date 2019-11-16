@@ -16,6 +16,7 @@ function main_menu() {
             --ok-label OK --cancel-label Exit \
             --menu "Version: $version - Que accion te gustaria realizar?" 25 75 20 \
             100 "-------------- Para RPI3 ----------------" \
+			0 "Rpi Instalar MasOS-Setup script" \
 			1 "Rpi Instalar MasOS-Setup script" \
 			2 "Rpi Instalar EmulOS-Setup script" \
 			3 "Rpi Instalar PiVPN" \
@@ -38,13 +39,14 @@ function main_menu() {
 			300 "Rpi AttractMode inicio auto CLI - version Raspian Lite" \
 			320 "Rpi AttractMode inicio auto Escritorio - version Raspian Desktop" \
 			100 "-------------- Roboticsinstall ACTUALIZAR VERSION ----------------" \
-			69 "----- ACTUALIZAR herramienta Roboticsinstall -----" \
+			69 "######## ACTUALIZAR herramienta Roboticsinstall ########" \
 			2>&1 > /dev/tty)
 
         case "$choice" in
 			100) separador_menu  ;;
 			69) robotics_update ;;
-            1) masos_instalador  ;;
+            0) emucops_rpi3_instalador  ;;
+			1) masos_instalador  ;;
             2) emulos_instalador  ;;
 			3) pivpn_instalador  ;;
             4) pihole_instalador ;;
@@ -70,6 +72,136 @@ function main_menu() {
 
 function separador_menu() {                                          
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
+}
+
+function emucops_rpi3_instalador() {                                          
+dialog --infobox "... EmuCOPS NOOBS v1 ,INSTALADOR AUTOMATICO DEL SISTEMA.\n\nInstala y configura AttractMode 2.6 y Retroarch 1.8.1 en su Rpi3b o b+\n\nSe instalan muchos paquetes desde la fuente para asegurar que tenemos la ultima version de cada programa, esto tarda un tiempo aprox de 15 a 20m. \n\n\n\n  INICIANDO ESPERE... ,CUANDO EL INSTALADOR TERMINE REINICIARA SU SISTEMA. ..." 30 55 ; sleep 7
+dialog --infobox "... Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
+sudo apt update
+#dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
+# sudo apt upgrade -y
+#dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
+#sudo dpkg-reconfigure keyboard-configuration
+#dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
+#sudo dpkg-reconfigure locales
+#dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
+#sudo dpkg-reconfigure tzdata
+dialog --infobox "... Compilar e instalar RetroArch 1.8.1, iniciando espere! ..." 30 55 ; sleep 3
+sudo apt install -y build-essential libasound2-dev libudev-dev
+sudo apt-get install -y make git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
+cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
+sudo rm v1.8.1.tar.gz
+cd RetroArch-1.8.1
+CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
+#CFLAGS = '-mfpu=neon' ./configure --disable-sdl --enable-sdl2 --disable-oss --disable-al --disable-jack --disable-qt
+#CFLAGS = '-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1 --disable-opengl_core
+#CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-networking --disable-sdl --disable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
+make -j2
+sudo make -j2 install
+cd && sudo rm -R RetroArch-1.8.1/
+dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
+#### DESCARGA Y COMPILACION DE CORES ,EMULADORES ....
+dialog --infobox "... Descargando y Copiando cores para retroarch en /home/pi/.config/retroarch/cores\n\n ..." 30 55 ; sleep 3
+cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
+cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
+sudo rm -R /home/pi/LR-CORES-RPI4/
+
+##### Compilar core lr flycast
+# cd && git clone --depth 1 https://github.com/reicast/reicast-emulator
+# cd reicast-emulator/reicast/linux/
+# make platform=rpi3
+# cp
+# rm -R 
+dialog --infobox "... Creando la ultima version del core FLYCAST para su sistema ...\n\n- Iniciando Construccion del core - ESPERE .... ..." 30 55 ; sleep 5
+cd && git clone --depth 1 https://github.com/libretro/flycast.git
+cd flycast/
+make platform=rpi3
+cp flycast_libretro.so /home/pi/.config/retroarch/cores/
+cd && sudo rm -R flycast/
+dialog --infobox "... FlyCast y mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
+
+##### cargar configuracion retroarch
+cd && cp RPI-RoboticsInstalls/configs/rpi3/retroarch.cfg /home/pi/.config/retroarch/
+
+##### instalar assets rpi3
+dialog --infobox "... Descargando y Copiando ASSETS para retroarch en /home/pi/.config/retroarch/assets ..." 30 55 ; sleep 3
+cd && git clone --depth 1 https://github.com/libretro/retroarch-assets.git
+cp -R retroarch-assets/* /home/pi/.config/retroarch/assets/
+sudo rm -R /home/pi/retroarch-assets/
+
+##### instalar bios base retroarch
+dialog --infobox "... Descargando y Copiando BIOS BASE para retroarch en /home/pi/.config/retroarch/system ..." 30 55 ; sleep 3
+
+cd && git clone --depth 1 https://github.com/DOCK-PI3/rpi-retroarch-bios.git
+cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
+sudo rm -R /home/pi/rpi-retroarch-bios/
+
+dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
+dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
+###### FIN RETROARCH INSTALL RPI3 ###########################
+
+###### INICIO ATTRACT INSTALL RPI3 ###########################
+dialog --infobox "... Script instalador de AttractMode en su version mas reciente ..." 30 55 ; sleep 3
+# Cierra ES para una mejor y mas rapida compilacion de attract y ffmpeg......
+sudo killall emulationstation
+sudo killall emulationstation-dev
+
+# ACTUALIZAR LISTA DE PAQUETES
+sudo apt-get update
+
+# Crear entorno para compilar
+cd /home/pi && mkdir develop
+
+# Instalar las dependencias para "sfml-pi" y Attract-Mode
+sudo apt-get install -y pkg-config libfontconfig1-dev
+sudo apt-get install -y cmake libflac-dev libogg-dev libvorbis-dev libopenal-dev libjpeg8-dev libfreetype6-dev libudev-dev libraspberrypi-dev
+# Descargar y compilar sfml-pi
+cd /home/pi/develop
+git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
+mkdir sfml-pi/build; cd sfml-pi/build
+cmake .. -DSFML_RPI=1 -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libbrcmEGL.so -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libbrcmGLESv2.so
+sudo make install
+sudo ldconfig
+
+# Compilar FFmpeg con soporte mmal (decodificacion de video acelerada por hardware)
+cd /home/pi/develop
+git clone --depth 1 git://source.ffmpeg.org/ffmpeg.git
+cd ffmpeg
+./configure --enable-mmal --disable-debug --enable-shared
+make -j3
+sudo make install
+sudo ldconfig
+
+# Descargar y compilar Attract-Mode
+cd && mkdir .attract
+cd /home/pi/develop
+git clone --depth 1 https://github.com/mickelson/attract attract
+cd attract
+make -j3 USE_GLES=1
+sudo make -j3 install USE_GLES=1
+sudo rm -r -f /home/pi/develop
+
+#### config full rescue ######
+cd && git clone --deep 1 https://github.com/DOCK-PI3/EmuCOPS-Attract-autoconf.git
+cp -R /home/pi/EmuCOPS-Attract-autoconf/attract/* /home/pi/.attract/
+cd && mkdir EmuCOPS
+cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmuCOPS/
+sudo rm -R /home/pi/EmuCOPS-Attract-autoconf
+
+# Permisos rutas attract #
+sudo chown -R pi:pi /usr/local/bin/attract
+sudo chown -R pi:pi /usr/local/share/attract/
+sudo chown -R pi:pi /home/pi/.attract/
+#dialog --infobox " Una vez que inicie attract seleccione su idioma \n ,ya puede usar atrractmode. " 350 350 ; sleep 10
+dialog --infobox " Attract se instalo de forma correcta y con mmal. " 350 350 ; sleep 3
+dialog --infobox "... CREANDO INICIO DE ATTRACT AUTO EN CLI - CONSOLA ..." 30 55 ; sleep 3
+cd && cp .bashrc .bashrc_back
+cd && sudo cp RPI-RoboticsInstalls/configs/rpi3/.bashrc /home/pi/
+sudo chown -R pi:pi /home/pi/.bashrc
+dialog --infobox "... EMUCOPS INSTALADO, REINICIANDO CON ATTRACT EN MODO CLI - CONSOLA ..." 30 55 ; sleep 5
+
+sudo shutdown -r now
+###### EMUCOPS FIN,FIN ATTRACT,RETROARCH INSTALL Y CONFIG RPI3 ###########################
 }
 
 function consola_attract_autolaunch() {                                          
@@ -114,7 +246,7 @@ exit
 }
 
 function masos_instalador() {                                          
-dialog --infobox "... Script instalador de MasOS en su version mas reciente ...\n\n" 30 55 ; sleep 3
+dialog --infobox "... Script instalador de MasOS en su version mas reciente ..." 30 55 ; sleep 3
 sudo apt-get update
 sudo apt-get install -y git
 cd
@@ -192,12 +324,6 @@ sudo rm -R /home/pi/LR-CORES-RPI4/
 # make platform=rpi3
 # cp
 # rm -R 
-dialog --infobox "... Creando la ultima version del core FLYCAST para su sistema ...\n\n- Iniciando Construccion del core - ESPERE .... ..." 30 55 ; sleep 5
-cd && git clone --depth 1 https://github.com/libretro/flycast.git
-cd flycast/
-make platform=rpi3
-cp flycast_libretro.so /home/pi/.config/retroarch/cores/
-cd && sudo rm -R flycast/
 dialog --infobox "... FlyCast y mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
 
 ##### cargar configuracion retroarch
