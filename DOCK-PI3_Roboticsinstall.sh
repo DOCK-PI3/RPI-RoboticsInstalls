@@ -69,14 +69,14 @@ function separador_menu() {
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
 }
 
-function attract_autoini_menu() {                                          
+function menu2() {                                          
 dialog --infobox "... Activa/Desactiva attract mode en el inicio ..." 30 55 ; sleep 3
       local choice
 
     while true; do
         choice=$(dialog --backtitle "$BACKTITLE" --title " MAIN MENU " \
             --ok-label OK --cancel-label Exit \
-            --menu "Que accion te gustaria realizar?" 25 75 20 \
+            --menu2 "Que accion te gustaria realizar?" 25 75 20 \
             100 "-------------- RPI ATTRACT MENU AUTOLAUNCH ----------------" \
 			1 "Rpi AttractMode inicio auto CLI - version Raspian Lite" \
 			2 "Rpi AttractMode inicio auto Escritorio - version Raspian Desktop" \
@@ -601,4 +601,4 @@ sudo reboot
 }
 
 main_menu
-#attract_autoini_menu
+menu2
