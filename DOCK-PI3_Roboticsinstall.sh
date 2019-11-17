@@ -78,7 +78,7 @@ dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
 function emucops_rpi3_instalador() {                                          
 dialog --infobox "... EmuCOPS NOOBS v1 ,INSTALADOR AUTOMATICO DEL SISTEMA.\n\nInstala y configura AttractMode 2.6 y Retroarch 1.8.1 en su Rpi3b o b+\n\nSe instalan muchos paquetes desde la fuente para asegurar que tenemos la ultima version de cada programa, esto tarda un tiempo aprox de 15 a 20m. \n\n\n\n  INICIANDO ESPERE... ,CUANDO EL INSTALADOR TERMINE REINICIARA SU SISTEMA. ..." 30 55 ; sleep 7
 dialog --infobox "... Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
-sudo apt update
+sudo apt-get update
 #dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
 # sudo apt upgrade -y
 #dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
@@ -88,8 +88,8 @@ sudo apt update
 #dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
 #sudo dpkg-reconfigure tzdata
 dialog --infobox "... Compilar e instalar RetroArch 1.8.1, iniciando espere! ..." 30 55 ; sleep 3
-sudo apt install -y build-essential libasound2-dev libudev-dev
-sudo apt-get install -y make git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
+sudo apt-get install -y build-essential libasound2-dev libudev-dev
+sudo apt-get install -y make git git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
 sudo rm v1.8.1.tar.gz
 cd RetroArch-1.8.1
@@ -101,10 +101,15 @@ make -j2
 sudo make -j2 install
 cd && sudo rm -R RetroArch-1.8.1/
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
+dialog --infobox "... Ahora se abrira RetroArch 1.8.1 ,cierre el programa para seguir con la \n\nconfiguracion automatica y la descarga de cores! ..." 30 55 ; sleep 7
+
+retroarch
+sudo killall retroarch
+
 #### DESCARGA Y COMPILACION DE CORES ,EMULADORES ....
 dialog --infobox "... Descargando y Copiando cores para retroarch en /home/pi/.config/retroarch/cores\n\n ..." 30 55 ; sleep 3
-cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
-cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
+cd && git clone https://github.com/DOCK-PI3/LR-CORES-RPI4.git
+cd && cp -R LR-CORES-RPI4/* /home/pi/.config/retroarch/cores
 sudo rm -R /home/pi/LR-CORES-RPI4/
 
 ##### Compilar core lr flycast
@@ -126,14 +131,14 @@ cd && cp RPI-RoboticsInstalls/configs/rpi3/retroarch.cfg /home/pi/.config/retroa
 
 ##### instalar assets rpi3
 dialog --infobox "... Descargando y Copiando ASSETS para retroarch en /home/pi/.config/retroarch/assets ..." 30 55 ; sleep 3
-cd && git clone --depth 1 https://github.com/libretro/retroarch-assets.git
-cp -R retroarch-assets/* /home/pi/.config/retroarch/assets/
+cd && git clone https://github.com/libretro/retroarch-assets.git
+cd && cp -R retroarch-assets/* /home/pi/.config/retroarch/assets/
 sudo rm -R /home/pi/retroarch-assets/
 
 ##### instalar bios base retroarch
 dialog --infobox "... Descargando y Copiando BIOS BASE para retroarch en /home/pi/.config/retroarch/system ..." 30 55 ; sleep 3
 
-cd && git clone --depth 1 https://github.com/DOCK-PI3/rpi-retroarch-bios.git
+cd && git clone https://github.com/DOCK-PI3/rpi-retroarch-bios.git
 cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
 sudo rm -R /home/pi/rpi-retroarch-bios/
 
@@ -158,7 +163,7 @@ sudo apt-get install -y pkg-config libfontconfig1-dev
 sudo apt-get install -y cmake libflac-dev libogg-dev libvorbis-dev libopenal-dev libjpeg8-dev libfreetype6-dev libudev-dev libraspberrypi-dev
 # Descargar y compilar sfml-pi
 cd /home/pi/develop
-git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
+git clone https://github.com/mickelson/sfml-pi sfml-pi
 mkdir sfml-pi/build; cd sfml-pi/build
 cmake .. -DSFML_RPI=1 -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libbrcmEGL.so -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libbrcmGLESv2.so
 sudo make install
@@ -166,7 +171,7 @@ sudo ldconfig
 
 # Compilar FFmpeg con soporte mmal (decodificacion de video acelerada por hardware)
 cd /home/pi/develop
-git clone --depth 1 git://source.ffmpeg.org/ffmpeg.git
+git clone git://source.ffmpeg.org/ffmpeg.git
 cd ffmpeg
 ./configure --enable-mmal --disable-debug --enable-shared
 make -j3
@@ -176,14 +181,18 @@ sudo ldconfig
 # Descargar y compilar Attract-Mode
 cd && mkdir .attract
 cd /home/pi/develop
-git clone --depth 1 https://github.com/mickelson/attract attract
+git clone https://github.com/mickelson/attract attract
 cd attract
 make -j3 USE_GLES=1
 sudo make -j3 install USE_GLES=1
 sudo rm -r -f /home/pi/develop
+dialog --infobox " Ahora se inicia Attract, seleccione su idioma y cierre Attract.\n\n ,una vez lo cierre seguimos con la auto configuracion. " 350 350 ; sleep 10
+
+attract
+sudo killall attract
 
 #### config full rescue ######
-cd && git clone --deep 1 https://github.com/DOCK-PI3/EmuCOPS-Attract-autoconf.git
+cd && git clone https://github.com/DOCK-PI3/EmuCOPS-Attract-autoconf.git
 cp -R /home/pi/EmuCOPS-Attract-autoconf/attract/* /home/pi/.attract/
 cd && mkdir EmuCOPS
 cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmuCOPS/
@@ -201,7 +210,7 @@ cd && sudo cp RPI-RoboticsInstalls/configs/rpi3/.bashrc /home/pi/
 sudo chown -R pi:pi /home/pi/.bashrc
 dialog --infobox "... EMUCOPS INSTALADO, REINICIANDO CON ATTRACT EN MODO CLI - CONSOLA\n\nOpcional : Puede instalar SAMBA para mas comodidad - RECOMENDADO! ..." 30 55 ; sleep 5
 
-sudo shutdown -r now
+sudo reboot
 ###### EMUCOPS FIN,FIN ATTRACT,RETROARCH INSTALL Y CONFIG RPI3 ###########################
 }
 
