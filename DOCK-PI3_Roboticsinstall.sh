@@ -114,18 +114,6 @@ cd && git clone https://github.com/DOCK-PI3/LR-CORES-RPI4.git
 cd && cp -R LR-CORES-RPI4/* /home/pi/.config/retroarch/cores
 sudo rm -R /home/pi/LR-CORES-RPI4/
 
-##### Compilar core lr flycast
-# cd && git clone --depth 1 https://github.com/reicast/reicast-emulator
-# cd reicast-emulator/reicast/linux/
-# make platform=rpi3
-# cp
-# rm -R 
-# dialog --infobox "... Creando la ultima version del core FLYCAST para su sistema ...\n\n- Iniciando Construccion del core - ESPERE .... ..." 30 55 ; sleep 5
-# cd && git clone --depth 1 https://github.com/libretro/flycast.git
-# cd flycast/
-# make platform=rpi3
-# cp flycast_libretro.so /home/pi/.config/retroarch/cores/
-# cd && sudo rm -R flycast/
 dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
 
 ##### cargar configuracion retroarch
@@ -145,6 +133,11 @@ cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
 sudo rm -R /home/pi/rpi-retroarch-bios/
 
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
+
+
+##### instalar shaders base para retroarch
+# añadir -->
+
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
 ###### FIN RETROARCH INSTALL RPI3 ###########################
 
