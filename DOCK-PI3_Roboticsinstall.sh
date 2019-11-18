@@ -104,11 +104,9 @@ make clean
 sudo make -j3 install
 cd && sudo rm -R RetroArch-1.8.1/
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
-dialog --infobox "... Ahora se abrira RetroArch 1.8.1 ,cierre el programa para seguir con la \n\nconfiguracion automatica y la descarga de cores! ..." 30 55 ; sleep 7
-
-retroarch
-sleep 2
-sudo killall retroarch
+# dialog --infobox "... Ahora se abrira RetroArch 1.8.1 ,cierre el programa para seguir con la \n\nconfiguracion automatica y la descarga de cores! ..." 30 55 ; sleep 7
+# retroarch
+# sudo killall retroarch
 
 #### DESCARGA Y COMPILACION DE CORES ,EMULADORES ....
 dialog --infobox "... Descargando y Copiando cores para retroarch en /home/pi/.config/retroarch/cores\n\n ..." 30 55 ; sleep 3
@@ -187,16 +185,17 @@ cd attract
 make -j3 USE_GLES=1
 sudo make -j3 install USE_GLES=1
 sudo rm -r -f /home/pi/develop
-dialog --infobox " Ahora se inicia Attract, seleccione su idioma y cierre Attract.\n\n ,una vez lo cierre seguimos con la auto configuracion. " 350 350 ; sleep 10
+# dialog --infobox " Ahora se inicia Attract, seleccione su idioma y cierre Attract.\n\n ,una vez lo cierre seguimos con la auto configuracion. " 350 350 ; sleep 10
 
-attract
-sudo killall attract
+# attract
+# sudo killall attract
 
 #### config full rescue ######
 cd && git clone https://github.com/DOCK-PI3/EmuCOPS-Attract-autoconf.git
 cp -R /home/pi/EmuCOPS-Attract-autoconf/attract/* /home/pi/.attract/
 cd && mkdir EmuCOPS
 cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmuCOPS/
+sudo cp -R /home/pi/EmuCOPS-Attract-autoconf/usr/local/share/attract/* /usr/local/share/attract/
 sudo rm -R /home/pi/EmuCOPS-Attract-autoconf
 
 # Permisos rutas attract #
@@ -212,7 +211,6 @@ sudo chown -R pi:pi /home/pi/.bashrc
 
 # INSTALAR SAMBA SERVER #
 dialog --infobox "... Instalar SAMBA server - SMB..." 30 55 ; sleep 3
-sudo apt-get update
 sudo apt-get install -y samba samba-common-bin
 dialog --infobox "... El directorio /home/pi/ se comparte por defecto en modo lectura\nAhora crearemos el directorio sharesd en /home/pi ,aqui tiene permisos de escritura..." 30 55 ; sleep 5
 sudo rm /etc/samba/smb.conf
