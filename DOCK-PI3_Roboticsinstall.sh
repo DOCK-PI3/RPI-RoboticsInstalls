@@ -210,6 +210,7 @@ sudo rm /etc/samba/smb.conf
 cd && sudo cp RPI-RoboticsInstalls/configs/smb.conf /etc/samba/
 dialog --infobox "... Ahora crearemos un usuario para acceder a samba sharesd\n\nEl nombre por defecto es pi\n\nIntrodusca usted la contraseña..." 30 55 ; sleep 7
 sudo smbpasswd -a pi
+cd && sudo cp -R RPI-RoboticsInstalls/configs/emucops_hname/* /etc/
 sudo systemctl restart smbd
 dialog --infobox "... Instalado SAMBA Server - SMB ...\n\nLa ruta del recurso compartido es: \\EMUCOPS\ \n\nRecuerde ingresar con usuario pi y su contraseña para samba" 30 55 ; sleep 15
 
