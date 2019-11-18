@@ -78,27 +78,30 @@ dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
 function emucops_rpi3_instalador() {                                          
 dialog --infobox "... EmuCOPS NOOBS v1 ,INSTALADOR AUTOMATICO DEL SISTEMA.\n\nInstala y configura AttractMode 2.6 y Retroarch 1.8.1 en su Rpi3b o b+\n\nSe instalan muchos paquetes desde la fuente para asegurar que tenemos la ultima version de cada programa, esto tarda un tiempo aprox de 15 a 20m. \n\n\n\n  INICIANDO ESPERE... ,CUANDO EL INSTALADOR TERMINE REINICIARA SU SISTEMA. ..." 30 55 ; sleep 7
 dialog --infobox "... Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
+# ACTUALIZAR LISTAS Y PAQUETES DEL SISTEMA
 sudo apt-get update
-#dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
-# sudo apt upgrade -y
-#dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
-#sudo dpkg-reconfigure keyboard-configuration
-#dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
-#sudo dpkg-reconfigure locales
-#dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
-#sudo dpkg-reconfigure tzdata
+dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
+sudo apt-get upgrade -y
+# CONFIGURACION BASICA DEL SISTEMA
+dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
+sudo dpkg-reconfigure keyboard-configuration
+dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
+sudo dpkg-reconfigure locales
+dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
+sudo dpkg-reconfigure tzdata
+# INSTALACION DE RETROARCH
 dialog --infobox "... Compilar e instalar RetroArch 1.8.1, iniciando espere! ..." 30 55 ; sleep 3
 sudo apt-get install -y build-essential libasound2-dev libudev-dev
 sudo apt-get install -y make git git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
 sudo rm v1.8.1.tar.gz
 cd RetroArch-1.8.1
-CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
+#default ok#CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
 #CFLAGS = '-mfpu=neon' ./configure --disable-sdl --enable-sdl2 --disable-oss --disable-al --disable-jack --disable-qt
 #CFLAGS = '-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1 --disable-opengl_core
-#CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-networking --disable-sdl --disable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
-make -j2
-sudo make -j2 install
+CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-sdl --disable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
+make clean
+sudo make -j3 install
 cd && sudo rm -R RetroArch-1.8.1/
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
 dialog --infobox "... Ahora se abrira RetroArch 1.8.1 ,cierre el programa para seguir con la \n\nconfiguracion automatica y la descarga de cores! ..." 30 55 ; sleep 7
@@ -124,7 +127,7 @@ sudo rm -R /home/pi/LR-CORES-RPI4/
 # make platform=rpi3
 # cp flycast_libretro.so /home/pi/.config/retroarch/cores/
 # cd && sudo rm -R flycast/
-# dialog --infobox "... FlyCast y mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
+dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
 
 ##### cargar configuracion retroarch
 cd && cp RPI-RoboticsInstalls/configs/rpi3/retroarch.cfg /home/pi/.config/retroarch/
@@ -149,11 +152,8 @@ dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi3! ..." 3
 ###### INICIO ATTRACT INSTALL RPI3 ###########################
 dialog --infobox "... Script instalador de AttractMode en su version mas reciente ..." 30 55 ; sleep 3
 # Cierra ES para una mejor y mas rapida compilacion de attract y ffmpeg......
-sudo killall emulationstation
-sudo killall emulationstation-dev
-
-# ACTUALIZAR LISTA DE PAQUETES
-sudo apt-get update
+#sudo killall emulationstation
+#sudo killall emulationstation-dev
 
 # Crear entorno para compilar
 cd /home/pi && mkdir develop
