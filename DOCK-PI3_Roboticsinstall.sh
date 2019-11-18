@@ -107,6 +107,7 @@ dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo 
 dialog --infobox "... Ahora se abrira RetroArch 1.8.1 ,cierre el programa para seguir con la \n\nconfiguracion automatica y la descarga de cores! ..." 30 55 ; sleep 7
 
 retroarch
+sleep 2
 sudo killall retroarch
 
 #### DESCARGA Y COMPILACION DE CORES ,EMULADORES ....
@@ -202,13 +203,26 @@ sudo rm -R /home/pi/EmuCOPS-Attract-autoconf
 sudo chown -R pi:pi /usr/local/bin/attract
 sudo chown -R pi:pi /usr/local/share/attract/
 sudo chown -R pi:pi /home/pi/.attract/
-#dialog --infobox " Una vez que inicie attract seleccione su idioma \n ,ya puede usar atrractmode. " 350 350 ; sleep 10
+
 dialog --infobox " Attract se instalo de forma correcta y con mmal. " 350 350 ; sleep 3
 dialog --infobox "... CREANDO INICIO DE ATTRACT AUTO EN CLI - CONSOLA ..." 30 55 ; sleep 3
 cd && cp .bashrc .bashrc_back
 cd && sudo cp RPI-RoboticsInstalls/configs/rpi3/.bashrc /home/pi/
 sudo chown -R pi:pi /home/pi/.bashrc
-dialog --infobox "... EMUCOPS INSTALADO, REINICIANDO CON ATTRACT EN MODO CLI - CONSOLA\n\nOpcional : Puede instalar SAMBA para mas comodidad - RECOMENDADO! ..." 30 55 ; sleep 5
+
+# INSTALAR SAMBA SERVER #
+dialog --infobox "... Instalar SAMBA server - SMB..." 30 55 ; sleep 3
+sudo apt-get update
+sudo apt-get install -y samba samba-common-bin
+dialog --infobox "... El directorio /home/pi/ se comparte por defecto en modo lectura\nAhora crearemos el directorio sharesd en /home/pi ,aqui tiene permisos de escritura..." 30 55 ; sleep 5
+sudo rm /etc/samba/smb.conf
+cd && sudo cp RPI-RoboticsInstalls/configs/smb.conf /etc/samba/
+dialog --infobox "... Ahora crearemos un usuario para acceder a samba sharesd\n\nEl nombre por defecto es pi\n\nIntrodusca usted la contraseña..." 30 55 ; sleep 7
+sudo smbpasswd -a pi
+sudo systemctl restart smbd
+dialog --infobox "... Instalado SAMBA Server - SMB ...\n\nLa ruta del recurso compartido es: \\EMUCOPS\ \n\nRecuerde ingresar con usuario pi y su contraseña para samba" 30 55 ; sleep 15
+
+dialog --infobox "... EMUCOPS INSTALADO, REINICIANDO EN 10s CON ATTRACT EN MODO CLI - CONSOLA\n\nSe instalo SAMBA para su comodidad - RECOMENDADO! ..." 30 55 ; sleep 10
 
 sudo reboot
 ###### EMUCOPS FIN,FIN ATTRACT,RETROARCH INSTALL Y CONFIG RPI3 ###########################
@@ -472,7 +486,8 @@ sudo apt-get install -y libx11-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image
 # cmake -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libEGL.so -DFREETYPE_INCLUDE_DIR_freetype2=/usr/include -DFREETYPE_INCLUDE_DIR_ft2build=/usr/include/freetype2 -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libGLESv1_CM.so -DSFML_BCMHOST=1 -DSFML_OPENGL_ES=1 ..
 # sudo make -j4 install
 # sudo ldconfig
-sudo apt-get install -y libsfml-dev
+
+#sudo apt-get install -y libsfml-dev
 
 # Compilar FFmpeg con soporte mmal (decodificacion de video acelerada por hardware)
 cd /home/pi/develop
