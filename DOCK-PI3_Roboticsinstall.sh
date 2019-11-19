@@ -1,9 +1,9 @@
 #!/bin/bash
-version=" 1.9.9"
+version=" 2.0.1"
 infobox="${infobox}\n_______________________________________________________\n\n"
-infobox="${infobox}\n       DOCK-PI3_Roboticsinstall creado por vicio.....\nInstalador de multiples herramientas y utilidades.....\n"
+infobox="${infobox}\n       DOCK-PI3_Roboticsinstall creado por vicio.....\n\nInstalador de multiples herramientas y utilidades.....\n"
 infobox="${infobox}\n\n_______________________________________________________\n\n"
-infobox="${infobox}\nAttractMode 2.6,RetroArch 1.8.1 ,WebMin ,Mumble server\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS ,EmuCOPS NOOBs v1 y MasOS."
+infobox="${infobox}\n       AttractMode 2.6,RetroArch 1.8.1 ,WebMin ,Mumble server\n\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS ,EmuCOPS NOOBs v1 y MasOS."
 infobox="${infobox}\n\n\n_______________________________________________________\n\n"
 dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
 --title "Instalador de sistemas y utilidades rpi 4b, 3b y 3b+ (by EmulOS TEAM)" \
@@ -111,7 +111,8 @@ dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
 sudo dpkg-reconfigure tzdata
 # INSTALACION DE RETROARCH
 dialog --infobox "... Compilar e instalar RetroArch 1.8.1, iniciando espere! ..." 30 55 ; sleep 3
-sudo apt-get install -y build-essential libasound2-dev libudev-dev
+# ZLIB 
+sudo apt-get install -y build-essential libasound2-dev libudev-dev libz-dev libpng-dev
 sudo apt-get install -y make git git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
 sudo rm v1.8.1.tar.gz
@@ -333,7 +334,7 @@ sudo apt update
 #dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
 #sudo dpkg-reconfigure tzdata
 dialog --infobox "... Compilar e instalar RetroArch 1.8.1, iniciando espere! ..." 30 55 ; sleep 5
-sudo apt install -y build-essential libasound2-dev libudev-dev
+sudo apt install -y build-essential libasound2-dev libudev-dev libz-dev libpng-dev
 sudo apt-get install -y make git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
 sudo rm v1.8.1.tar.gz
@@ -393,7 +394,7 @@ sudo apt-get update
 #sudo dpkg-reconfigure tzdata
 dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
 #sudo apt-get install -y build-essential libasound2-dev libudev-dev libgles2-mesa-dev
-sudo apt-get install -y build-essential libxkbcommon-dev zlib1g-dev libfreetype6-dev libegl1-mesa-dev libasound2-dev libudev-dev libgles2-mesa-dev libgles2-mesa-dev libgbm-dev nvidia-cg-toolkit nvidia-cg-dev libavcodec-dev libsdl2-dev libsdl-image1.2-dev libxml2-dev yasm
+sudo apt-get install -y build-essential libxkbcommon-dev libz-dev libpng-dev zlib1g-dev libfreetype6-dev libegl1-mesa-dev libasound2-dev libudev-dev libgles2-mesa-dev libgles2-mesa-dev libgbm-dev nvidia-cg-toolkit nvidia-cg-dev libavcodec-dev libsdl2-dev libsdl-image1.2-dev libxml2-dev yasm
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
 sudo rm v1.8.1.tar.gz
 cd RetroArch-1.8.1
