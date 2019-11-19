@@ -36,6 +36,8 @@ function main_menu() {
 			70 "Rpi4 Instalar Retroarch 1.8.1" \
 			71 "Rpi4 Retroarch install CORES" \
 			72 "Rpi4 Instalar AttractMode - Alternate version X" \
+			73 "Rpi4 Instala herramienta para actualizar el firmware auto o manual" \
+			74 "Rpi4 UPDATE FIRMWARE Instalar Actualizaciones " \
 			100 "-------------- OPCIONES ATTRACTMODE AUTOSTART ----------------" \
 			300 "Rpi AttractMode inicio auto CLI - version Raspian Lite" \
 			320 "Rpi AttractMode inicio auto Escritorio - version Raspian Desktop" \
@@ -64,6 +66,8 @@ function main_menu() {
 			70) RPI4_retroarch_instalador ;;
 			71) RPI4_retroarch_install_cores ;;
 			72) RPI4_attractmode_instalador ;;
+			73) RPI4_installauto_updatefirmw ;;
+			74) RPI4_FIRMWARE_update ;;
 			300) consola_attract_autolaunch  ;;
             320) desktop_attract_autolaunch  ;;
 			*)  break ;;
@@ -73,6 +77,22 @@ function main_menu() {
 
 function separador_menu() {                                          
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
+}
+
+function RPI4_installauto_updatefirmw() {
+dialog --infobox "... RPI4 Instala Actualizador de Firmware herramienta ..." 30 55 ; sleep 3
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install -y rpi-eeprom rpi-eeprom-images
+# dialog --infobox "... Buscando Actualizaciones para el Firmware de RPI4 \n\n Si la busqueda da positivo puede actualizar el firmware \n\n usando la opcion 74 RPI4 UPDATE FIRMWARE, para desactivar las actualizaciones automaticas ejecute \n\n\n\n COMANDO: sudo systemctl mask rpi-eeprom-update \n\n\n\nPara reactivar las updates auto del firmware ejecute \n\n\n\n COMANDO: sudo systemctl unmask rpi-eeprom-update " 30 55 ; sleep 2
+# sudo rpi-eeprom-update
+}
+
+function RPI4_FIRMWARE_update() {
+dialog --infobox "... Actualizando el Firmware de su RPI4 ..." 30 55 ; sleep 2
+sudo rpi-eeprom-update
+dialog --infobox "... Firmware actualizado ... reiniciando en 10s " 30 55 ; sleep 10
+sudo reboot
 }
 
 function emucops_rpi3_instalador() {                                          
