@@ -406,12 +406,12 @@ make -j4
 sudo make install
 cd && sudo rm -R RetroArch-1.8.1/
 
-##### cargar configuracion retroarch
-cd && cp RPI-RoboticsInstalls/configs/rpi4/retroarch.cfg /home/pi/.config/retroarch/
-
 ##### instalar bios base
 dialog --infobox "... Descargando y Copiando BIOS BASE para retroarch en /home/pi/.config/retroarch/system ..." 30 55 ; sleep 3
+mkdir /home/pi/.config/retroarch/
 cd && mkdir /home/pi/.config/retroarch/system/
+##### cargar configuracion retroarch
+cd && cp RPI-RoboticsInstalls/configs/rpi4/retroarch.cfg /home/pi/.config/retroarch/
 cd && git clone https://github.com/DOCK-PI3/rpi-retroarch-bios.git
 cd && cp -R rpi-retroarch-bios/system/* /home/pi/.config/retroarch/system/
 sudo rm -R /home/pi/rpi-retroarch-bios/
@@ -717,7 +717,7 @@ exit
 function samba_instalador() {                                          
 dialog --infobox "... Instalar SAMBA server - SMB..." 30 55 ; sleep 3
 sudo apt-get update
-sudo apt-get install -y samba samba-common-bin
+sudo apt-get install -y samba samba-common-bin smbclient cifs-utils
 dialog --infobox "... El directorio /home/pi/ se comparte por defecto en modo lectura\nAhora crearemos el directorio sharesd en /home/pi ,aqui tiene permisos de escritura..." 30 55 ; sleep 5
 sudo rm /etc/samba/smb.conf
 cd && sudo cp RPI-RoboticsInstalls/configs/smb.conf /etc/samba/
