@@ -39,7 +39,7 @@ function main_menu() {
 			73 "Rpi4 Instala herramienta para actualizar el firmware auto o manual" \
 			74 "Rpi4 UPDATE FIRMWARE Instalar Actualizaciones " \
 			100 "-------------- OPCIONES ATTRACTMODE AUTOSTART ----------------" \
-			300 "Rpi AttractMode inicio auto CLI - version Raspian Lite" \
+			300 "Rpi AttractMode inicio auto CLI - version Raspian" \
 			320 "Rpi AttractMode inicio auto Escritorio - version Raspian Desktop" \
 			100 "-------------- Roboticsinstall ACTUALIZAR VERSION ----------------" \
 			69 "######## ACTUALIZAR herramienta Roboticsinstall ########" \
@@ -411,10 +411,9 @@ cd && cp RPI-RoboticsInstalls/configs/rpi4/retroarch.cfg /home/pi/.config/retroa
 
 ##### instalar bios base
 dialog --infobox "... Descargando y Copiando BIOS BASE para retroarch en /home/pi/.config/retroarch/system ..." 30 55 ; sleep 3
-
+cd && mkdir /home/pi/.config/retroarch/system/
 cd && git clone https://github.com/DOCK-PI3/rpi-retroarch-bios.git
-cd && cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
-cd && cp -R 
+cd && cp -R rpi-retroarch-bios/system/* /home/pi/.config/retroarch/system/
 sudo rm -R /home/pi/rpi-retroarch-bios/
 
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
