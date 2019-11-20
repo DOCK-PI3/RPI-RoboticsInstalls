@@ -80,19 +80,20 @@ dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
 }
 
 function RPI4_installauto_updatefirmw() {
-dialog --infobox "... RPI4 Instala Actualizador de Firmware herramienta ..." 30 55 ; sleep 3
+dialog --infobox "... RPI4 Instala Actualizador de Firmware y actualiza ..." 30 55 ; sleep 3
 sudo apt-get update
 sudo apt-get upgrade -y
 sudo apt-get install -y rpi-eeprom rpi-eeprom-images
 # dialog --infobox "... Buscando Actualizaciones para el Firmware de RPI4 \n\n Si la busqueda da positivo puede actualizar el firmware \n\n usando la opcion 74 RPI4 UPDATE FIRMWARE, para desactivar las actualizaciones automaticas ejecute \n\n\n\n COMANDO: sudo systemctl mask rpi-eeprom-update \n\n\n\nPara reactivar las updates auto del firmware ejecute \n\n\n\n COMANDO: sudo systemctl unmask rpi-eeprom-update " 30 55 ; sleep 2
 # sudo rpi-eeprom-update
+dialog --infobox "... Firmware de rpi4 actualizado correctamente. Reiniciando en 8s ..." 30 55 ; sleep 8
+sudo reboot
 }
 
 function RPI4_FIRMWARE_update() {
-dialog --infobox "... Actualizando el Firmware de su RPI4 ..." 30 55 ; sleep 2
+dialog --infobox "... Buscando updates del Firmware para su RPI4 ..." 30 55 ; sleep 2
 sudo rpi-eeprom-update
-dialog --infobox "... Firmware actualizado ... reiniciando en 10s " 30 55 ; sleep 10
-sudo reboot
+dialog --infobox "... Su version de Firmware es: ver consola ...  " 30 55 ; sleep 10
 }
 
 function emucops_rpi3_instalador() {                                          
@@ -393,25 +394,31 @@ sudo apt-get update
 #dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
 #sudo dpkg-reconfigure tzdata
 dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
-#sudo apt-get install -y build-essential libasound2-dev libudev-dev libgles2-mesa-dev
-sudo apt-get install -y build-essential libxkbcommon-dev libz-dev libpng-dev zlib1g-dev libfreetype6-dev libegl1-mesa-dev libasound2-dev libudev-dev libgles2-mesa-dev libgles2-mesa-dev libgbm-dev nvidia-cg-toolkit nvidia-cg-dev libavcodec-dev libsdl2-dev libsdl-image1.2-dev libxml2-dev yasm
+#sudo apt-get install -y build-essential libasound2-dev libudev-dev libgles2-mesa-dev libz-dev libpng-dev
+#sudo apt-get install -y build-essential libxkbcommon-dev zlib1g-dev libfreetype6-dev libegl1-mesa-dev libasound2-dev libudev-dev libgles2-mesa-dev libgles2-mesa-dev libgbm-dev nvidia-cg-toolkit nvidia-cg-dev libavcodec-dev libsdl2-dev libsdl-image1.2-dev libxml2-dev yasm
+sudo apt-get install -y build-essential libxkbcommon-dev zlib1g-dev libfreetype6-dev libegl1-mesa-dev libgles2-mesa-dev libgbm-dev libavcodec-dev libsdl2-dev libsdl-image1.2-dev libxml2-dev yasm libavformat-dev libavdevice-dev libswresample-dev libavresample-dev libswscale-dev libv4l-dev libgl*-mesa-dev
 cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
 sudo rm v1.8.1.tar.gz
 cd RetroArch-1.8.1
-CFLAGS='-mfpu=neon -mtune=cortex-a72 -march=armv8-a' ./configure --disable-opengl1 --enable-neon --enable-opengles3 --enable-opengles --disable-videocore
+#CFLAGS='-mfpu=neon -mtune=cortex-a72 -march=armv8-a' ./configure --disable-opengl1 --enable-neon --enable-opengles3 --enable-opengles --disable-videocore
+CFLAGS="-mfpu=neon" ./configure --disable-videocore --enable-opengl --disable-opengl1 --enable-alsa --enable-udev --disable-opengles --enable-neon
 make -j4
 sudo make install
 cd && sudo rm -R RetroArch-1.8.1/
+
+##### cargar configuracion retroarch
+cd && cp RPI-RoboticsInstalls/configs/rpi4/retroarch.cfg /home/pi/.config/retroarch/
 
 ##### instalar bios base
 dialog --infobox "... Descargando y Copiando BIOS BASE para retroarch en /home/pi/.config/retroarch/system ..." 30 55 ; sleep 3
 
 cd && git clone https://github.com/DOCK-PI3/rpi-retroarch-bios.git
 cd && cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
+cd && cp -R 
 sudo rm -R /home/pi/rpi-retroarch-bios/
 
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
-dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi4! ..." 30 55 ; sleep 7
+dialog --infobox "... RetroArch 1.8.1 instalado y configurado correctamente en su rpi4! ..." 30 55 ; sleep 7
 }
 
 
@@ -487,19 +494,19 @@ sudo apt-get update
 cd /home/pi && mkdir develop
 
 # Instalar las dependencias para "sfml-pi" y Attract-Mode
-sudo apt-get install -y git-core make cmake pkg-config libflac-dev libogg-dev libvorbis-dev libopenal-dev libjpeg-dev libjpeg8-dev libfreetype6-dev libudev-dev libudev-dev libfontconfig1-dev
+sudo apt-get install -y git-core make cmake pkg-config libflac-dev libogg-dev libvorbis-dev libopenal-devs libjpeg8-dev libfreetype6-dev libudev-dev libudev-dev libfontconfig1-dev
 sudo apt-get install -y libx11-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-ewmh-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxrandr2 libxrandr-dev libgles2-mesa-dev
 
-# Descargar y compilar sfml-pi
-# cd /home/pi/develop
-# git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
-# mkdir sfml-pi/build; cd sfml-pi/build
-# cmake -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libEGL.so -DFREETYPE_INCLUDE_DIR_freetype2=/usr/include -DFREETYPE_INCLUDE_DIR_ft2build=/usr/include/freetype2 -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libGLESv1_CM.so -DSFML_BCMHOST=1 -DSFML_OPENGL_ES=1 ..
-# sudo make -j4 install
-# sudo ldconfig
-
-sudo apt-get install -y libsfml-dev
+#Descargar y compilar sfml-pi
+cd /home/pi/develop
+git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
+mkdir sfml-pi/build; cd sfml-pi/build
+cmake -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libEGL.so -DFREETYPE_INCLUDE_DIR_freetype2=/usr/include -DFREETYPE_INCLUDE_DIR_ft2build=/usr/include/freetype2 -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libGLESv1_CM.so -DSFML_BCMHOST=1 -DSFML_OPENGL_ES=1 ..
+sudo make -j4 install
 sudo ldconfig
+
+# sudo apt-get install -y libsfml-dev
+# sudo ldconfig
 
 # Compilar FFmpeg con soporte mmal (decodificacion de video acelerada por hardware)
 cd /home/pi/develop
@@ -515,7 +522,7 @@ cd && mkdir .attract
 cd /home/pi/develop
 #git clone --depth 1 https://github.com/mickelson/attract attract
 git clone https://github.com/mickelson/attract attract
-cd attract
+#cd attract && dpkg-buildpackage -rfakeroot
 make -j3 USE_GLES=1
 sudo make -j3 install USE_GLES=1
 sudo rm -r -f /home/pi/develop
