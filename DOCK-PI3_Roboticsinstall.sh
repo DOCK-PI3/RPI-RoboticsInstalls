@@ -154,6 +154,11 @@ cd && git clone https://github.com/DOCK-PI3/rpi-retroarch-bios.git
 cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
 sudo rm -R /home/pi/rpi-retroarch-bios/
 
+##### add default shaders rpi ok...
+cd && git clone https://github.com/DOCK-PI3/emucops-retroarch-shaders.git
+cd && cp -R emucops-retroarch-shaders/shaders /home/pi/.config/retroarch/
+sudo rm -R /home/pi/emucops-retroarch-shaders/
+
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
 
 
@@ -378,6 +383,10 @@ cd && git clone --depth 1 https://github.com/DOCK-PI3/rpi-retroarch-bios.git
 cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
 sudo rm -R /home/pi/rpi-retroarch-bios/
 
+##### add default shaders rpi ok...
+cd && git clone https://github.com/DOCK-PI3/emucops-retroarch-shaders.git
+cd && cp -R emucops-retroarch-shaders/shaders /home/pi/.config/retroarch/
+sudo rm -R /home/pi/emucops-retroarch-shaders/
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
 }
@@ -415,6 +424,10 @@ cd && cp RPI-RoboticsInstalls/configs/rpi4/retroarch.cfg /home/pi/.config/retroa
 cd && git clone https://github.com/DOCK-PI3/rpi-retroarch-bios.git
 cd && cp -R rpi-retroarch-bios/system/* /home/pi/.config/retroarch/system/
 sudo rm -R /home/pi/rpi-retroarch-bios/
+##### add default shaders rpi ok...
+cd && git clone https://github.com/DOCK-PI3/emucops-retroarch-shaders.git
+cd && cp -R emucops-retroarch-shaders/shaders /home/pi/.config/retroarch/
+sudo rm -R /home/pi/emucops-retroarch-shaders/
 
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
 dialog --infobox "... RetroArch 1.8.1 instalado y configurado correctamente en su rpi4! ..." 30 55 ; sleep 7
