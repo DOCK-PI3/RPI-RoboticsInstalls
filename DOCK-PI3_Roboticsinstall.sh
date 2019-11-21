@@ -1,12 +1,12 @@
 #!/bin/bash
-version=" 2.0.1"
+version=" 2.0.8"
 infobox="${infobox}\n_______________________________________________________\n\n"
 infobox="${infobox}\n       DOCK-PI3_Roboticsinstall creado por vicio.....\n\nInstalador de multiples herramientas y utilidades.....\n"
 infobox="${infobox}\n\n_______________________________________________________\n\n"
 infobox="${infobox}\n       AttractMode 2.6,RetroArch 1.8.1 ,WebMin ,Mumble server\n\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS ,EmuCOPS NOOBs v1 y MasOS."
 infobox="${infobox}\n\n\n_______________________________________________________\n\n"
 dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
---title "Instalador de sistemas y utilidades rpi 4b, 3b y 3b+ (by EmulOS TEAM)" \
+--title "Instalador de sistemas y utilidades rpi 3b y 3b+ (by EmulOS TEAM)" \
 --msgbox "${infobox}" 35 110
 
 function main_menu() {
@@ -16,41 +16,40 @@ function main_menu() {
         choice=$(dialog --backtitle "$BACKTITLE" --title " MAIN MENU " \
             --ok-label OK --cancel-label Exit \
             --menu "Version: $version - Que accion te gustaria realizar?" 25 75 20 \
-            100 "-------------- Para RPI3 ----------------" \
-			0 "Rpi Instalar EmuCOPS NOOBs v1 FullSetup script" \
-			1 "Rpi Instalar MasOS-Setup script" \
-			2 "Rpi Instalar EmulOS-Setup script" \
-			3 "Rpi Instalar PiVPN" \
-            4 "Rpi Instalar PiHOLE" \
-			5 "Rpi Instalar WebMin" \
-			6 "Rpi Instalar Retroarch 1.8.1" \
-			8 "Rpi Instalar AttractMode" \
-			9 "Rpi Instalar VsFTPd" \
-			10 "Rpi Desktop Instalar The Fan Club - Duck DNS Setup" \
-			11 "Rpi Instalar Mumble Server VOIP" \
-			12 "Rpi Instalar SAMBA Server" \
-			13 "Rpi Instalar GUI DESKTOP LXDE" \
-			14 "Rpi Instalar GUI DESKTOP XFCE4" \
-			15 "Rpi Instalar GUI DESKTOP MATE" \
-			100 "-------------- Para RPI4 ----------------" \
-			70 "Rpi4 Instalar Retroarch 1.8.1" \
-			71 "Rpi4 Retroarch install CORES" \
-			72 "Rpi4 Instalar AttractMode - Alternate version X" \
-			73 "Rpi4 Instala herramienta para actualizar el firmware auto o manual" \
-			74 "Rpi4 UPDATE FIRMWARE Instalar Actualizaciones " \
+            100 "-------------- Para RPI3 B y B+ ----------------" \
+			100 "---------------------------------------------------------------" \
+			0 "Rpi3 Instalar EmuCOPS NOOBs v1 FullSetup script" \
+			1 "Rpi3 Instalar EmulOS-Setup script" \
+			2 "Rpi3 Instalar MasOS-Setup script" \
+			3 "Rpi3 Instalar PiVPN" \
+            4 "Rpi3 Instalar PiHOLE" \
+			5 "Rpi3 Instalar WebMin" \
+			6 "Rpi3 Instalar Retroarch 1.8.1" \
+			8 "Rpi3 Instalar AttractMode" \
+			9 "Rpi3 Instalar VsFTPd" \
+			10 "Rpi3 Desktop Instalar The Fan Club - Duck DNS Setup" \
+			11 "Rpi3 Instalar Mumble Server VOIP" \
+			12 "Rpi3 Instalar SAMBA Server" \
+			13 "Rpi3 Instalar GUI DESKTOP LXDE" \
+			14 "Rpi3 Instalar GUI DESKTOP XFCE4" \
+			15 "Rpi3 Instalar GUI DESKTOP MATE" \
+			71 "Rpi3 Retroarch install CORES" \
+			100 "---------------------------------------------------------------" \
 			100 "-------------- OPCIONES ATTRACTMODE AUTOSTART ----------------" \
-			300 "Rpi AttractMode inicio auto CLI - version Raspian" \
-			320 "Rpi AttractMode inicio auto Escritorio - version Raspian Desktop" \
+			300 "Rpi3 AttractMode inicio auto CLI - version Raspian" \
+			320 "Rpi3 AttractMode inicio auto Escritorio - version Raspian Desktop" \
+			100 "---------------------------------------------------------------" \
 			100 "-------------- Roboticsinstall ACTUALIZAR VERSION ----------------" \
 			69 "######## ACTUALIZAR herramienta Roboticsinstall ########" \
+			100 "---------------------------------------------------------------" \
 			2>&1 > /dev/tty)
 
         case "$choice" in
 			100) separador_menu  ;;
 			69) robotics_update ;;
             0) emucops_rpi3_instalador  ;;
-			1) masos_instalador  ;;
-            2) emulos_instalador  ;;
+			1) emulos_instalador  ;;
+            2) masos_instalador  ;;
 			3) pivpn_instalador  ;;
             4) pihole_instalador ;;
 			5) webmin_instalador ;;
@@ -63,11 +62,7 @@ function main_menu() {
 			13) lxde_instalador ;;
 			14) xfce4_instalador ;;
 			15) mate_instalador ;;
-			70) RPI4_retroarch_instalador ;;
-			71) RPI4_retroarch_install_cores ;;
-			72) RPI4_attractmode_instalador ;;
-			73) RPI4_installauto_updatefirmw ;;
-			74) RPI4_FIRMWARE_update ;;
+			71) RPI3_retroarch_install_cores ;;
 			300) consola_attract_autolaunch  ;;
             320) desktop_attract_autolaunch  ;;
 			*)  break ;;
@@ -77,23 +72,6 @@ function main_menu() {
 
 function separador_menu() {                                          
 dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
-}
-
-function RPI4_installauto_updatefirmw() {
-dialog --infobox "... RPI4 Instala Actualizador de Firmware y actualiza ..." 30 55 ; sleep 3
-sudo apt-get update
-sudo apt-get upgrade -y
-sudo apt-get install -y rpi-eeprom rpi-eeprom-images
-# dialog --infobox "... Buscando Actualizaciones para el Firmware de RPI4 \n\n Si la busqueda da positivo puede actualizar el firmware \n\n usando la opcion 74 RPI4 UPDATE FIRMWARE, para desactivar las actualizaciones automaticas ejecute \n\n\n\n COMANDO: sudo systemctl mask rpi-eeprom-update \n\n\n\nPara reactivar las updates auto del firmware ejecute \n\n\n\n COMANDO: sudo systemctl unmask rpi-eeprom-update " 30 55 ; sleep 2
-# sudo rpi-eeprom-update
-dialog --infobox "... Firmware de rpi4 actualizado correctamente. Reiniciando en 8s ..." 30 55 ; sleep 8
-sudo reboot
-}
-
-function RPI4_FIRMWARE_update() {
-dialog --infobox "... Buscando updates del Firmware para su RPI4 ..." 30 55 ; sleep 2
-sudo rpi-eeprom-update
-dialog --infobox "... Su version de Firmware es: ver consola ...  " 30 55 ; sleep 10
 }
 
 function emucops_rpi3_instalador() {                                          
@@ -151,19 +129,16 @@ sudo rm -R /home/pi/retroarch-assets/
 dialog --infobox "... Descargando y Copiando BIOS BASE para retroarch en /home/pi/.config/retroarch/system ..." 30 55 ; sleep 3
 
 cd && git clone https://github.com/DOCK-PI3/rpi-retroarch-bios.git
-cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
+cd && cp -R rpi-retroarch-bios/system/ /home/pi/.config/retroarch/
 sudo rm -R /home/pi/rpi-retroarch-bios/
-
-##### add default shaders rpi ok...
-cd && git clone https://github.com/DOCK-PI3/emucops-retroarch-shaders.git
-cd && cp -R emucops-retroarch-shaders/shaders /home/pi/.config/retroarch/
-sudo rm -R /home/pi/emucops-retroarch-shaders/
 
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
 
-
-##### instalar shaders base para retroarch
-# añadir -->
+##### instalar shaders base para retroarch - rpi ok -testeados.
+cd && git clone https://github.com/DOCK-PI3/emucops-retroarch-shaders.git
+cd && cp -R emucops-retroarch-shaders/shaders/ /home/pi/.config/retroarch/
+sudo rm -R /home/pi/emucops-retroarch-shaders/
+sudo chown -R pi:pi /home/pi/.config/
 
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
 ###### FIN RETROARCH INSTALL RPI3 ###########################
@@ -353,11 +328,10 @@ make -j2
 sudo make -j2 install
 cd && sudo rm -R RetroArch-1.8.1/
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
-#### DESCARGA Y COMPILACION DE CORES ,EMULADORES ....
+#### DESCARGA E INSTALACION DE CORES ,EMULADORES ....
 dialog --infobox "... Descargando y Copiando cores para retroarch en /home/pi/.config/retroarch/cores\n\n ..." 30 55 ; sleep 3
 cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
-cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
-sudo rm -R /home/pi/LR-CORES-RPI4/
+cd && cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores/
 
 ##### Compilar core lr flycast
 # cd && git clone --depth 1 https://github.com/reicast/reicast-emulator
@@ -366,6 +340,7 @@ sudo rm -R /home/pi/LR-CORES-RPI4/
 # cp
 # rm -R 
 dialog --infobox "... FlyCast y mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
+cd && sudo rm -R /home/pi/LR-CORES-RPI4/
 
 ##### cargar configuracion retroarch
 cd && cp RPI-RoboticsInstalls/configs/rpi3/retroarch.cfg /home/pi/.config/retroarch/
@@ -373,7 +348,7 @@ cd && cp RPI-RoboticsInstalls/configs/rpi3/retroarch.cfg /home/pi/.config/retroa
 ##### instalar assets rpi3
 dialog --infobox "... Descargando y Copiando ASSETS para retroarch en /home/pi/.config/retroarch/assets ..." 30 55 ; sleep 3
 cd && git clone --depth 1 https://github.com/libretro/retroarch-assets.git
-cp -R retroarch-assets/* /home/pi/.config/retroarch/assets/
+cd && cp -R retroarch-assets/* /home/pi/.config/retroarch/assets/
 sudo rm -R /home/pi/retroarch-assets/
 
 ##### instalar bios base retroarch
@@ -391,54 +366,11 @@ dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
 dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
 }
 
-function RPI4_retroarch_instalador() {                                          
-dialog --infobox "... RIP4 BETA Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
-sudo apt-get update
-#dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
-# sudo apt upgrade -y
-#dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
-#sudo dpkg-reconfigure keyboard-configuration
-#dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
-#sudo dpkg-reconfigure locales
-#dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
-#sudo dpkg-reconfigure tzdata
-dialog --infobox "... Compilar e instalar RetroArch ,iniciando espere! ..." 30 55 ; sleep 5
-#sudo apt-get install -y build-essential libasound2-dev libudev-dev libgles2-mesa-dev libz-dev libpng-dev
-#sudo apt-get install -y build-essential libxkbcommon-dev zlib1g-dev libfreetype6-dev libegl1-mesa-dev libasound2-dev libudev-dev libgles2-mesa-dev libgles2-mesa-dev libgbm-dev nvidia-cg-toolkit nvidia-cg-dev libavcodec-dev libsdl2-dev libsdl-image1.2-dev libxml2-dev yasm
-sudo apt-get install -y build-essential libxkbcommon-dev zlib1g-dev libfreetype6-dev libegl1-mesa-dev libgles2-mesa-dev libgbm-dev libavcodec-dev libsdl2-dev libsdl-image1.2-dev libxml2-dev yasm libavformat-dev libavdevice-dev libswresample-dev libavresample-dev libswscale-dev libv4l-dev libgl*-mesa-dev
-cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
-sudo rm v1.8.1.tar.gz
-cd RetroArch-1.8.1
-#CFLAGS='-mfpu=neon -mtune=cortex-a72 -march=armv8-a' ./configure --disable-opengl1 --enable-neon --enable-opengles3 --enable-opengles --disable-videocore
-CFLAGS="-mfpu=neon" ./configure --disable-videocore --enable-opengl --disable-opengl1 --enable-alsa --enable-udev --disable-opengles --enable-neon
-make -j4
-sudo make install
-cd && sudo rm -R RetroArch-1.8.1/
-
-##### instalar bios base
-dialog --infobox "... Descargando y Copiando BIOS BASE para retroarch en /home/pi/.config/retroarch/system ..." 30 55 ; sleep 3
-mkdir /home/pi/.config/retroarch/
-cd && mkdir /home/pi/.config/retroarch/system/
-##### cargar configuracion retroarch
-cd && cp RPI-RoboticsInstalls/configs/rpi4/retroarch.cfg /home/pi/.config/retroarch/
-cd && git clone https://github.com/DOCK-PI3/rpi-retroarch-bios.git
-cd && cp -R rpi-retroarch-bios/system/* /home/pi/.config/retroarch/system/
-sudo rm -R /home/pi/rpi-retroarch-bios/
-##### add default shaders rpi ok...
-cd && git clone https://github.com/DOCK-PI3/emucops-retroarch-shaders.git
-cd && cp -R emucops-retroarch-shaders/shaders /home/pi/.config/retroarch/
-sudo rm -R /home/pi/emucops-retroarch-shaders/
-
-dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
-dialog --infobox "... RetroArch 1.8.1 instalado y configurado correctamente en su rpi4! ..." 30 55 ; sleep 7
-}
-
-
 function attractmode_instalador() {                                          
-dialog --infobox "... Script instalador de AttractMode en su version mas reciente ..." 30 55 ; sleep 3
+dialog --infobox "... Rpi3 Script instalador de AttractMode en su version mas reciente ..." 30 55 ; sleep 3
 # Cierra ES para una mejor y mas rapida compilacion de attract y ffmpeg......
-sudo killall emulationstation
-sudo killall emulationstation-dev
+# sudo killall emulationstation
+# sudo killall emulationstation-dev
 
 # ACTUALIZAR LISTA DE PAQUETES
 sudo apt-get update
@@ -453,6 +385,7 @@ sudo apt-get install -y cmake libflac-dev libogg-dev libvorbis-dev libopenal-dev
 cd /home/pi/develop
 git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
 mkdir sfml-pi/build; cd sfml-pi/build
+#cmake -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libEGL.so -DFREETYPE_INCLUDE_DIR_freetype2=/usr/include -DFREETYPE_INCLUDE_DIR_ft2build=/usr/include/freetype2 -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libGLESv1_CM.so -DSFML_BCMHOST=1 -DSFML_OPENGL_ES=1 ..
 cmake .. -DSFML_RPI=1 -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libbrcmEGL.so -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libbrcmGLESv2.so
 sudo make install
 sudo ldconfig
@@ -491,113 +424,14 @@ dialog --infobox " Attract se instalo de forma correcta y con mmal ... " 350 350
 # sudo shutdown -r now
 }
 
-
 #################################################
-function RPI4_attractmode_instalador() {                                          
-dialog --infobox "... RPI4 Script instalador de AttractMode en su version mas reciente ..." 30 55 ; sleep 3
-# Cierra ES para una mejor y mas rapida compilacion de attract y ffmpeg......
-# sudo killall emulationstation
-# sudo killall emulationstation-dev
 
-# ACTUALIZAR LISTA DE PAQUETES
-sudo apt-get update
-
-# Crear entorno para compilar
-cd /home/pi && mkdir develop
-
-# Instalar las dependencias para "sfml-pi" y Attract-Mode
-sudo apt-get install -y git-core make cmake pkg-config libflac-dev libogg-dev libvorbis-dev libopenal-devs libjpeg8-dev libfreetype6-dev libudev-dev libudev-dev libfontconfig1-dev
-sudo apt-get install -y libx11-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-ewmh-dev libxcb-keysyms1-dev libxcb-icccm4-dev libxrandr2 libxrandr-dev libgles2-mesa-dev
-
-#Descargar y compilar sfml-pi
-cd /home/pi/develop
-git clone --depth 1 https://github.com/mickelson/sfml-pi sfml-pi
-mkdir sfml-pi/build; cd sfml-pi/build
-cmake -DEGL_INCLUDE_DIR=/opt/vc/include -DEGL_LIBRARY=/opt/vc/lib/libEGL.so -DFREETYPE_INCLUDE_DIR_freetype2=/usr/include -DFREETYPE_INCLUDE_DIR_ft2build=/usr/include/freetype2 -DGLES_INCLUDE_DIR=/opt/vc/include -DGLES_LIBRARY=/opt/vc/lib/libGLESv1_CM.so -DSFML_BCMHOST=1 -DSFML_OPENGL_ES=1 ..
-sudo make -j4 install
-sudo ldconfig
-
-# sudo apt-get install -y libsfml-dev
-# sudo ldconfig
-
-# Compilar FFmpeg con soporte mmal (decodificacion de video acelerada por hardware)
-cd /home/pi/develop
-git clone --depth 1 git://source.ffmpeg.org/ffmpeg.git
-cd ffmpeg
-./configure --enable-mmal --disable-debug --enable-shared
-make -j4
-sudo make -j4 install
-sudo ldconfig
-
-# Descargar y compilar Attract-Mode
-cd && mkdir .attract
-cd /home/pi/develop
-#git clone --depth 1 https://github.com/mickelson/attract attract
-git clone https://github.com/mickelson/attract attract
-#cd attract && dpkg-buildpackage -rfakeroot
-make -j3 USE_GLES=1
-sudo make -j3 install USE_GLES=1
-sudo rm -r -f /home/pi/develop
-dialog --infobox " Ahora se abre attract mode, una vez que inicie attract seleccione su idioma \n y luego cierre atrract mode para seguir con la configuracion. " 350 350 ; sleep 10
-attract
-
-#### config full rescue ######
-cd && git clone https://github.com/DOCK-PI3/EmuCOPS-Attract-autoconf.git
-cp -R /home/pi/EmuCOPS-Attract-autoconf/attract/* /home/pi/.attract/
-cd && mkdir EmuCOPS
-cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmuCOPS/
-sudo rm -R /home/pi/EmuCOPS-Attract-autoconf
-
-
-# Permisos rutas attract #
-sudo chown -R pi:pi /usr/local/bin/attract
-sudo chown -R pi:pi /usr/local/share/attract/
-sudo chown -R pi:pi /home/pi/.attract/
-dialog --infobox " Una vez que inicie attract seleccione su idioma \n ,ya puede usar atrractmode. " 350 350 ; sleep 10
-}
-
-function RPI4_retroarch_install_cores() {                                          
-dialog --infobox "... RPI4 Retroarch instalando core \n\n CORES: ..." 30 55 ; sleep 3
-cd ~
-mkdir EmUCoP-cores
-cd EmUCoP-cores
-dialog --infobox "... RPI4 Retroarch instalando core libretro-fceumm ..." 30 55 ; sleep 2
-git clone --depth 1 https://github.com/libretro/libretro-fceumm.git
-cd libretro-fceumm
-make -j3
-
-dialog --infobox "... RPI4 Retroarch instalando core snes9x2010 ..." 30 55 ; sleep 2
-cd ~
-cd EmUCoP-cores
-git clone --depth 1 https://github.com/libretro/snes9x2010.git
-cd snes9x2010
-make -j3
-
-dialog --infobox "... RPI4 Retroarch instalando core mupen64plus-libretro ..." 30 55 ; sleep 2
-cd ~
-cd EmUCoP-cores
-git clone --depth 1 https://github.com/libretro/mupen64plus-libretro.git
-cd mupen64plus-libretro
-platform=rpi4 make -j3
-
-dialog --infobox "... RPI4 Retroarch instalando core  pcsx_rearmed ..." 30 55 ; sleep 2
-cd ~
-cd EmUCoP-cores
-git clone --depth 1 https://github.com/libretro/pcsx_rearmed.git
-cd pcsx_rearmed
-platform=rpi4 make -f Makefile.libretro
-
+function RPI3_retroarch_install_cores() {                                          
 dialog --infobox "... Descargando y Copiando mas de 70 cores para retroarch en /home/pi/.config/retroarch/cores ..." 30 55 ; sleep 5
 cd && git clone https://github.com/DOCK-PI3/LR-CORES-RPI4.git
-cd && cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores
+cd && cp -R LR-CORES-RPI4/*.so /home/pi/.config/retroarch/cores/
 
-cd && cp -R EmUCoP-cores/libretro-fceumm/*.so /home/pi/.config/retroarch/cores
-cd && cp -R EmUCoP-cores/snes9x2010/*.so /home/pi/.config/retroarch/cores
-cd && cp -R EmUCoP-cores/mupen64plus-libretro/*.so /home/pi/.config/retroarch/cores
-cd && cp -R EmUCoP-cores/pcsx_rearmed/pcsx_rearmed_libretro.so /home/pi/.config/retroarch/cores/
-
-dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 2
-sudo rm -R /home/pi/EmUCoP-cores/
+dialog --infobox "... Mas de 70 Cores instalados de forma correcta .. limpiando basura...." 30 55 ; sleep 3
 sudo rm -R /home/pi/LR-CORES-RPI4/
 }
 
