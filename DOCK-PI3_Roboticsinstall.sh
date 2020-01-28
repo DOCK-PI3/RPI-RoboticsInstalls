@@ -3,7 +3,7 @@ version=" 2.0.8"
 infobox="${infobox}\n_______________________________________________________\n\n"
 infobox="${infobox}\n       DOCK-PI3_Roboticsinstall creado por vicio.....\n\nInstalador de multiples herramientas y utilidades.....\n"
 infobox="${infobox}\n\n_______________________________________________________\n\n"
-infobox="${infobox}\n       AttractMode 2.6,RetroArch 1.8.1 ,WebMin ,Mumble server\n\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS ,EmuCOPS NOOBs v1 y MasOS."
+infobox="${infobox}\n       AttractMode 2.6,RetroArch 1.8.4 ,WebMin ,Mumble server\n\nSamba ,vsFTPd ,Duck DNS ,Pi-Hole ,Pi-VPN ,EmulOS ,EmuCOPS NOOBs v1 y MasOS."
 infobox="${infobox}\n\n\n_______________________________________________________\n\n"
 dialog --backtitle "Version de la aplicacion: $version - Multi-instalador de Herramientas y utils" \
 --title "Instalador de sistemas y utilidades rpi 3b y 3b+ (by EmulOS TEAM)" \
@@ -24,7 +24,7 @@ function main_menu() {
 			3 "Rpi3 Instalar PiVPN" \
             4 "Rpi3 Instalar PiHOLE" \
 			5 "Rpi3 Instalar WebMin" \
-			6 "Rpi3 Instalar Retroarch 1.8.1" \
+			6 "Rpi3 Instalar Retroarch 1.8.4" \
 			8 "Rpi3 Instalar AttractMode" \
 			9 "Rpi3 Instalar VsFTPd" \
 			10 "Rpi3 Desktop Instalar The Fan Club - Duck DNS Setup" \
@@ -75,8 +75,8 @@ dialog --infobox "... Separador para el menu, sin funcion ..." 30 55 ; sleep 2
 }
 
 function emucops_rpi3_instalador() {                                          
-dialog --infobox "... EmuCOPS NOOBS v1 ,INSTALADOR AUTOMATICO DEL SISTEMA.\n\nInstala y configura AttractMode 2.6 y Retroarch 1.8.1 en su Rpi3b o b+\n\nSe instalan muchos paquetes desde la fuente para asegurar que tenemos la ultima version de cada programa, esto tarda un tiempo aprox de 15 a 20m. \n\n\n\n  INICIANDO ESPERE... ,CUANDO EL INSTALADOR TERMINE REINICIARA SU SISTEMA. ..." 30 55 ; sleep 7
-dialog --infobox "... Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
+dialog --infobox "... EmuCOPS NOOBS v1 ,INSTALADOR AUTOMATICO DEL SISTEMA.\n\nInstala y configura AttractMode 2.6 y Retroarch 1.8.4 en su Rpi3b o b+\n\nSe instalan muchos paquetes desde la fuente para asegurar que tenemos la ultima version de cada programa, esto tarda un tiempo aprox de 15 a 20m. \n\n\n\n  INICIANDO ESPERE... ,CUANDO EL INSTALADOR TERMINE REINICIARA SU SISTEMA. ..." 30 55 ; sleep 7
+dialog --infobox "... Script instalador de Retroarch en su version 1.8.4 ..." 30 55 ; sleep 3
 # ACTUALIZAR LISTAS Y PAQUETES DEL SISTEMA
 sudo apt-get update
 dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
@@ -89,22 +89,22 @@ sudo dpkg-reconfigure locales
 dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
 sudo dpkg-reconfigure tzdata
 # INSTALACION DE RETROARCH
-dialog --infobox "... Compilar e instalar RetroArch 1.8.1, iniciando espere! ..." 30 55 ; sleep 3
+dialog --infobox "... Compilar e instalar RetroArch 1.8.4, iniciando espere! ..." 30 55 ; sleep 3
 # ZLIB 
 sudo apt-get install -y build-essential libasound2-dev libudev-dev libz-dev libpng-dev
 sudo apt-get install -y make git git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
-cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
-sudo rm v1.8.1.tar.gz
-cd RetroArch-1.8.1
+cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.4.tar.gz' && tar -zxvf v1.8.4.tar.gz
+sudo rm v1.8.4.tar.gz
+cd RetroArch-1.8.4
 #default ok#CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
 #CFLAGS = '-mfpu=neon' ./configure --disable-sdl --enable-sdl2 --disable-oss --disable-al --disable-jack --disable-qt
 #CFLAGS = '-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1 --disable-opengl_core
 CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-sdl --disable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
 make clean
 sudo make -j3 install
-cd && sudo rm -R RetroArch-1.8.1/
-dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
-# dialog --infobox "... Ahora se abrira RetroArch 1.8.1 ,cierre el programa para seguir con la \n\nconfiguracion automatica y la descarga de cores! ..." 30 55 ; sleep 7
+cd && sudo rm -R RetroArch-1.8.4/
+dialog --infobox "... RetroArch 1.8.4 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
+# dialog --infobox "... Ahora se abrira RetroArch 1.8.4 ,cierre el programa para seguir con la \n\nconfiguracion automatica y la descarga de cores! ..." 30 55 ; sleep 7
 # retroarch
 # sudo killall retroarch
 
@@ -140,7 +140,7 @@ cd && cp -R emucops-retroarch-shaders/shaders/ /home/pi/.config/retroarch/
 sudo rm -R /home/pi/emucops-retroarch-shaders/
 sudo chown -R pi:pi /home/pi/.config/
 
-dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
+dialog --infobox "... RetroArch 1.8.4 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
 ###### FIN RETROARCH INSTALL RPI3 ###########################
 
 ###### INICIO ATTRACT INSTALL RPI3 ###########################
@@ -188,8 +188,8 @@ sudo rm -r -f /home/pi/develop
 #### config full rescue ######
 cd && git clone https://github.com/DOCK-PI3/EmuCOPS-Attract-autoconf.git
 cp -R /home/pi/EmuCOPS-Attract-autoconf/attract/* /home/pi/.attract/
-cd && mkdir EmuCOPS
-cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmuCOPS/
+cd && mkdir EmulOS
+cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmulOS/
 sudo cp -R /home/pi/EmuCOPS-Attract-autoconf/usr/local/share/attract/* /usr/local/share/attract/
 sudo rm -R /home/pi/EmuCOPS-Attract-autoconf
 
@@ -304,30 +304,30 @@ dialog --infobox "... La instalación se ejecuto automáticamente en /usr/share/
 }
 
 function retroarch_instalador() {                                          
-dialog --infobox "... Script instalador de Retroarch en su version 1.8.1 ..." 30 55 ; sleep 3
+dialog --infobox "... Script instalador de Retroarch en su version 1.8.4 ..." 30 55 ; sleep 3
 sudo apt update
-#dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
-# sudo apt upgrade -y
-#dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
-#sudo dpkg-reconfigure keyboard-configuration
-#dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
-#sudo dpkg-reconfigure locales
-#dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
-#sudo dpkg-reconfigure tzdata
-dialog --infobox "... Compilar e instalar RetroArch 1.8.1, iniciando espere! ..." 30 55 ; sleep 5
+dialog --infobox "... Iniciando actualizacion del sistema y sus paquetes ,comentado dmomento..." 30 55 ; sleep 2
+sudo apt upgrade -y
+dialog --infobox "... Elija la distribucion para su teclado ..." 30 55 ; sleep 5
+sudo dpkg-reconfigure keyboard-configuration
+dialog --infobox "... Seleccione con espacio es_ES.UTF-8 si vive en España y pulse enter..." 30 55 ; sleep 5
+sudo dpkg-reconfigure locales
+dialog --infobox "... Elija su zona horaria ..." 30 55 ; sleep 5
+sudo dpkg-reconfigure tzdata
+dialog --infobox "... Compilar e instalar RetroArch 1.8.4, iniciando espere! ..." 30 55 ; sleep 5
 sudo apt install -y build-essential libasound2-dev libudev-dev libz-dev libpng-dev
 sudo apt-get install -y make git-core curl g++ pkg-config libglu1-mesa-dev freeglut3-dev mesa-common-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
-cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.1.tar.gz' && tar -zxvf v1.8.1.tar.gz
-sudo rm v1.8.1.tar.gz
-cd RetroArch-1.8.1
+cd && curl -LO 'https://github.com/libretro/RetroArch/archive/v1.8.4.tar.gz' && tar -zxvf v1.8.4.tar.gz
+sudo rm v1.8.4.tar.gz
+cd RetroArch-1.8.4
 CFLAGS='-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1
 #CFLAGS = '-mfpu=neon' ./configure --disable-sdl --enable-sdl2 --disable-oss --disable-al --disable-jack --disable-qt
 #CFLAGS = '-mfpu=neon' ./configure --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx --disable-opengl1 --disable-opengl_core
 #CFLAGS='-march=armv8-a+crc -mtune=cortex-a53 -O2 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations' ./configure --disable-ffmpeg --disable-networking --disable-sdl --disable-sdl2 --disable-x11 --disable-freetype --disable-debug --disable-opengl1 --disable-opengl_core --enable-opengles --enable-alsa --enable-udev --enable-floathard --enable-neon --enable-dispmanx
 make -j2
 sudo make -j2 install
-cd && sudo rm -R RetroArch-1.8.1/
-dialog --infobox "... RetroArch 1.8.1 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
+cd && sudo rm -R RetroArch-1.8.4/
+dialog --infobox "... RetroArch 1.8.4 instalado correctamente ,iniciando modulo para descarga de cores! ..." 30 55 ; sleep 3
 #### DESCARGA E INSTALACION DE CORES ,EMULADORES ....
 dialog --infobox "... Descargando y Copiando cores para retroarch en /home/pi/.config/retroarch/cores\n\n ..." 30 55 ; sleep 3
 cd && git clone --depth 1 https://github.com/DOCK-PI3/LR-CORES-RPI4.git
@@ -363,7 +363,7 @@ cd && git clone https://github.com/DOCK-PI3/emucops-retroarch-shaders.git
 cd && cp -R emucops-retroarch-shaders/shaders /home/pi/.config/retroarch/
 sudo rm -R /home/pi/emucops-retroarch-shaders/
 dialog --infobox "... Descarga de BIOS BASE: correcta ..." 30 55 ; sleep 3
-dialog --infobox "... RetroArch 1.8.1 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
+dialog --infobox "... RetroArch 1.8.4 instalado correctamente en su rpi3! ..." 30 55 ; sleep 7
 }
 
 function attractmode_instalador() {                                          
@@ -411,8 +411,8 @@ sudo rm -r -f /home/pi/develop
 #### config full rescue ######
 cd && git clone --deep 1 https://github.com/DOCK-PI3/EmuCOPS-Attract-autoconf.git
 cp -R /home/pi/EmuCOPS-Attract-autoconf/attract/* /home/pi/.attract/
-cd && mkdir EmuCOPS
-cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmuCOPS/
+cd && mkdir EmulOS
+cp -R /home/pi/EmuCOPS-Attract-autoconf/EmuCOPS/* /home/pi/EmulOS/
 sudo rm -R /home/pi/EmuCOPS-Attract-autoconf
 
 # Permisos rutas attract #
